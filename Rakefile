@@ -7,4 +7,13 @@ namespace :db do
 
     Sequel::Migrator.apply(MvwIntern::App.database, 'db/migrations')
   end
+
+  desc 'Rollback migration'
+  task :rollback do
+    require 'sequel/extensions/migration'
+
+    database = MvwIntern::App.database
+    version  = (row = database[:schema_info].first) ? row[:version] : nil
+    Sequel::Migrator.apply(database, 'db/migrations', version - 1)
+  end
 end
