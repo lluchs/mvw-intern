@@ -4,4 +4,4 @@ require 'bundler'
 Bundler.require 
  
 require './mvw_intern' 
-run MvwIntern
+run MvwIntern::App

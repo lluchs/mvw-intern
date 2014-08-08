@@ -1,7 +1,16 @@
 require 'sinatra/base'
+require 'sinatra/sequel'
 
-class MvwIntern < Sinatra::Base
-  get '/' do
-    'Hello World!'
+module MvwIntern
+  class App < Sinatra::Base
+    register Sinatra::SequelExtension
+
+    configure do
+      set :database_url, 'sqlite://db/db.sqlite'
+    end
+
+    get '/' do
+      'Hello World!'
+    end
   end
 end
