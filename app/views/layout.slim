@@ -1,7 +1,30 @@
 doctype html
 html
   head
+    meta charset="utf-8"
+    meta name="viewport" content="width=device-width, initial-scale=1.0"
+
     title MVW Intern
 
+    link rel="stylesheet" href="/assets/pure-min.css"
+    link rel="stylesheet" href="/assets/side-menu.css"
+
   body
-    == yield
+    #layout
+      / Menu toggle link
+      a#menuLink.menu-link href="#menu"
+        / Hamburger icon
+        span
+
+      nav#menu
+        .pure-menu.pure-menu-open
+          a.pure-menu-heading href="/" MVW Intern
+
+          ul
+            li
+              a href="#" Kalender
+
+      #main
+        == yield
+
+    script src="/assets/ui.js"
