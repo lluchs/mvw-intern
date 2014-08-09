@@ -5,14 +5,20 @@ module MvwIntern
   class App < Sinatra::Base
     register Sinatra::SequelExtension
 
+    # Database configuration
     configure do
       set :database_url, 'sqlite://db/db.sqlite'
       database
       require './app/models'
     end
 
+    # Views configuration
+    configure do
+      set :views, settings.root + '/app/views'
+    end
+
     get '/' do
-      'Hello World!'
+      slim :index
     end
 
     get '/users' do
