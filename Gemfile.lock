@@ -3,6 +3,8 @@ GEM
   specs:
     daemons (1.1.9)
     eventmachine (1.0.3-x86-mingw32)
+    hike (1.2.3)
+    multi_json (1.10.1)
     rack (1.5.2)
     rack-protection (1.5.3)
       rack
@@ -17,6 +19,11 @@ GEM
     slim (2.0.3)
       temple (~> 0.6.6)
       tilt (>= 1.3.3, < 2.1)
+    sprockets (2.12.1)
+      hike (~> 1.2)
+      multi_json (~> 1.0)
+      rack (~> 1.0)
+      tilt (~> 1.1, != 1.3.0)
     sqlite3 (1.3.9-x86-mingw32)
     temple (0.6.8)
     thin (1.6.2)
@@ -33,5 +40,6 @@ DEPENDENCIES
   sinatra
   sinatra-sequel
   slim
+  sprockets
   sqlite3
   thin

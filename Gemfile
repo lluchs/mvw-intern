@@ -4,6 +4,7 @@ gem 'sinatra'
 gem 'thin'
 
 gem 'slim'
+gem 'sprockets'
 
 gem 'sequel'
 gem 'sinatra-sequel'

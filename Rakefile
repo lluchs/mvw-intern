@@ -23,11 +23,4 @@ namespace :assets do
   task :bower do
     sh 'bower install'
   end
-
-  desc 'Copy bower dependencies'
-  task :copy => :bower do
-    mkdir_p 'public/assets'
-    cp 'bower_components/pure/pure-min.css', 'public/assets'
-    cp Dir['app/assets/*'], 'public/assets'
-  end
 end
