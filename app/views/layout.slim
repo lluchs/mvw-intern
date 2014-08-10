@@ -9,7 +9,7 @@ html
     link rel="stylesheet" href="/assets/pure/pure-min.css"
     link rel="stylesheet" href="/assets/side-menu.css"
 
-  body
+  body data-login=(session[:email])
     #layout
       / Menu toggle link
       a#menuLink.menu-link href="#menu"
@@ -20,11 +20,16 @@ html
         .pure-menu.pure-menu-open
           a.pure-menu-heading href="/" MVW Intern
 
-          ul
-            li
-              a href="#" Kalender
+          - if login?
+            ul
+              li
+                a href="#" Kalender
+              li
+                button.pure-button#signout Abmelden
 
       #main
         == yield
 
-    script src="/assets/ui.js"
+    script src="https://login.persona.org/include.js"
+    script src="/assets/jquery/dist/jquery.min.js"
+    script src="/assets/main.js"
