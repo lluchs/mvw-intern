@@ -17,15 +17,20 @@ module MvwIntern
             :audience  => settings.persona_audience,
           }
           response = JSON.parse(RestClient::Resource.new(restclient_url, :verify_ssl => true).post(restclient_params))
-          puts response.to_json
         end
 
         # create a session if assertion is valid
         if response["status"] == "okay"
-          session[:email] = response["email"]
-          response.to_json
+          # Check whether we have a user with the given email address.
+          email = response["email"]
+          if Models::User[email: email].nil?
+            [403, {status: "error", message: 'Es gibt keinen Nutzer mit dieser E-Mail-Adresse.'}.to_json]
+          else
+            session[:email] = email
+            response.to_json
+          end
         else
-          [403, {:status => "error"}.to_json]
+          [403, response.to_json]
         end
       end
 

@@ -14,7 +14,11 @@
         success: function(res, status, xhr) { window.location.reload(); },
         error: function(xhr, status, err) {
           navigator.id.logout();
-          alert("Login failure: " + err);
+          var reason = '';
+          try {
+            reason = JSON.parse(xhr.responseText).message;
+          } catch(err) {}
+          alert('Anmeldung fehlgeschlagen. ' + reason);
         }
       });
     },
