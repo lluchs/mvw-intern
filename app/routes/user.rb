@@ -11,9 +11,12 @@ module MvwIntern
 
       app.post '/user' do
         user = Models::User.new
-        user.name = params[:name]
-        user.email = params[:email]
-        user.admin = params[:admin]
+
+        user.name       = params[:name]
+        user.email      = params[:email]
+        user.instrument = params[:instrument]
+        user.admin      = params[:admin]
+
         user.save
 
         redirect '/user'

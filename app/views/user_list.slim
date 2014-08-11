@@ -14,8 +14,10 @@ main
       tr
         th Name
         th E-Mail
+        th Instrument
 
     - @users.each do |user|
       tr
         td= user.name
         td= user.email
+        td= user.instrument
