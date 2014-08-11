@@ -1,6 +1,9 @@
-/ Locals: method, user
-form.pure-form.pure-form-aligned action="/user" method=method
+/ Locals: method, user, submit_label
+form.pure-form.pure-form-aligned action="/user" method="post"
   fieldset
+
+    input type="hidden" name="_method" value=method
+    input type="hidden" name="id" value=user.id
 
     .pure-control-group
       label for="name" Name
@@ -16,7 +19,7 @@ form.pure-form.pure-form-aligned action="/user" method=method
 
     .pure-controls
       label.pure-checkbox for="admin"
-        input#admin name="admin" type="checkbox" value=user.admin
+        input#admin name="admin" type="checkbox" checked=user.admin
         | &nbsp; Admin
 
-      button.pure-button.pure-button-primary type="submit" Hinzufügen
+      button.pure-button.pure-button-primary type="submit" = submit_label

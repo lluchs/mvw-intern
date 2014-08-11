@@ -18,6 +18,11 @@ main
 
     - @users.each do |user|
       tr
-        td= user.name
+        td
+          / Link to the edit form for admins.
+          - if current_user.admin
+            a href="/user/#{user.id}/edit" = user.name
+          - else
+            = user.name
         td= user.email
         td= user.instrument

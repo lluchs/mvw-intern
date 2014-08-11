@@ -24,6 +24,7 @@ module MvwIntern
     configure do
       enable :logging
       enable :sessions
+      enable :method_override
     end
 
     configure :development do
