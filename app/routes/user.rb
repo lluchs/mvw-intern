@@ -24,6 +24,7 @@ module MvwIntern
 
       app.get '/user/add' do
         halt 403 unless current_user.admin
+        @user = Models::User.new
         slim :user_add
       end
 

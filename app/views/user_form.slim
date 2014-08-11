@@ -1,0 +1,22 @@
+/ Locals: method, user
+form.pure-form.pure-form-aligned action="/user" method=method
+  fieldset
+
+    .pure-control-group
+      label for="name" Name
+      input#name name="name" type="text" required="" value=user.name
+
+    .pure-control-group
+      label for="email" E-Mail
+      input#email name="email" type="email" required="" value=user.email
+
+    .pure-control-group
+      label for="instrument" Instrument
+      input#instrument name="instrument" type="text" value=user.instrument
+
+    .pure-controls
+      label.pure-checkbox for="admin"
+        input#admin name="admin" type="checkbox" value=user.admin
+        | &nbsp; Admin
+
+      button.pure-button.pure-button-primary type="submit" Hinzufügen

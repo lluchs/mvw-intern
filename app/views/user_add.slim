@@ -2,24 +2,4 @@ header
   h1 Mitglied hinzufügen
 
 main
-  form.pure-form.pure-form-aligned action="/user" method="post"
-    fieldset
-
-      .pure-control-group
-        label for="name" Name
-        input#name name="name" type="text" required=""
-
-      .pure-control-group
-        label for="email" E-Mail
-        input#email name="email" type="email" required=""
-
-      .pure-control-group
-        label for="instrument" Instrument
-        input#instrument name="instrument" type="text"
-
-      .pure-controls
-        label.pure-checkbox for="admin"
-          input#admin name="admin" type="checkbox"
-          | &nbsp; Admin
-
-        button.pure-button.pure-button-primary type="submit" Hinzufügen
+  == slim :user_form, locals: {method: 'post', user: @user}
