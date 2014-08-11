@@ -1,0 +1,17 @@
+header
+  h1 Mitglieder
+
+main
+
+  p Liste aller registrierter Gesamtkapellenmitglieder:
+
+  table.pure-table.pure-table-horizontal
+    thead
+      tr
+        th Name
+        th E-Mail
+
+    - @users.each do |user|
+      tr
+        td= user.name
+        td= user.email
