@@ -11,7 +11,7 @@ module MvwIntern
 
     # Database configuration
     configure do
-      set :database_url, 'sqlite://db/db.sqlite'
+      set :database_url, ENV['DATABASE_URL'] || 'sqlite://db/db.sqlite'
       database
       require './app/models'
     end
