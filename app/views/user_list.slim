@@ -5,6 +5,10 @@ main
 
   p Liste aller registrierter Gesamtkapellenmitglieder:
 
+  - if current_user.admin
+    p
+      a.pure-button href="/user/add" Benutzer hinzufügen...
+
   table.pure-table.pure-table-horizontal
     thead
       tr
