@@ -2,6 +2,7 @@
 
 require 'mail'
 require 'maildir'
+require 'sanitize'
 
 module MvwIntern
   module Helpers
@@ -21,8 +22,8 @@ module MvwIntern
     # Sanitizes the given mail body.
     def sanitize_mail(mail)
       if mail.content_type.start_with? 'text/html'
-        # TODO: sanitize
-        mail.body.decoded
+        html = mail.body.decoded
+        Sanitize.fragment(html, Sanitize::Config::BASIC)
       else
         Rack::Utils.escape_html(mail.body.decoded)
       end

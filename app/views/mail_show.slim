@@ -5,4 +5,5 @@ header
 main
   p
     strong Von: #{@mail.from.first}
-  p= @body
+  / The body is already sanitized.
+  p== @body

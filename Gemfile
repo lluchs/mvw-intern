@@ -13,5 +13,7 @@ gem 'sqlite3'
 
 gem 'rest-client'
 
+# Needed for /mail routes
 gem 'mail'
 gem 'maildir'
+gem 'sanitize'
