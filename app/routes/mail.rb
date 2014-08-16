@@ -7,6 +7,7 @@ module MvwIntern
         
         app.get '/mail' do
           @messages = get_maildir_contents
+            .sort_by { |msg| msg.data.date }
             .reverse
           slim :mail
         end
