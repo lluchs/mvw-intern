@@ -4,6 +4,6 @@ header
 
 main
   p
-    strong Von: #{@mail.from.first}
+    strong Von: #{email_to_name @mail.from.first}
   / The body is already sanitized.
   p== @body

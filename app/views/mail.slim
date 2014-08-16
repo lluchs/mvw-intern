@@ -14,5 +14,5 @@ main
         tr
           td
             a href="/mail/#{message.key}" = mail.subject
-          td= mail.from.first
+          td= email_to_name mail.from.first
           td= mail.date.strftime '%d.%m.%Y %H:%M'
