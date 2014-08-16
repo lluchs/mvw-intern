@@ -2,10 +2,12 @@ GEM
   remote: https://rubygems.org/
   specs:
     daemons (1.1.9)
-    eventmachine (1.0.3)
     eventmachine (1.0.3-x86-mingw32)
     ffi (1.9.3-x86-mingw32)
     hike (1.2.3)
+    mail (2.6.1)
+      mime-types (>= 1.16, < 3)
+    maildir (2.1.0)
     mime-types (2.3)
     multi_json (1.10.1)
     netrc (0.7.7)
@@ -32,7 +34,6 @@ GEM
       multi_json (~> 1.0)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
-    sqlite3 (1.3.9)
     sqlite3 (1.3.9-x86-mingw32)
     temple (0.6.8)
     thin (1.6.2)
@@ -45,6 +46,8 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
+  mail
+  maildir
   rest-client
   sequel
   sinatra

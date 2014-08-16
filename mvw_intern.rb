@@ -1,5 +1,6 @@
 require 'sinatra/base'
 require 'sinatra/sequel'
+require 'maildir'
 
 require './app/helpers'
 require './app/routes'
@@ -30,11 +31,13 @@ module MvwIntern
     configure :development do
       set :session_secret, 'foobar'
       set :persona_audience, 'http://localhost:3000'
+      set :maildir, 'maildir'
     end
 
     configure :production do
       set :session_secret, ENV['SESSION_SECRET']
       set :persona_audience, ENV['PERSONA_AUDIENCE']
+      set :maildir, ENV['MAILDIR']
     end
 
     before do

@@ -1,0 +1,16 @@
+header
+  h1 Mail-Archiv
+
+main
+  table.pure-table
+    thead
+      tr
+        th Betreff
+        th Von
+        th Datum
+    tbody
+      - @mails.each do |mail|
+        tr
+          td= mail.subject
+          td= mail.from.first
+          td= mail.date.strftime '%d.%m.%Y %H:%M'

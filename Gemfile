@@ -12,3 +12,6 @@ gem 'sinatra-sequel'
 gem 'sqlite3'
 
 gem 'rest-client'
+
+gem 'mail'
+gem 'maildir'

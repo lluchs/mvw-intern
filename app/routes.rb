@@ -6,6 +6,7 @@ module MvwIntern
     def self.registered(app)
       app.register Auth
       app.register User
+      app.register Mail
     end
   end
 end
