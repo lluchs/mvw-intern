@@ -6,13 +6,21 @@ module MvwIntern
       def self.registered(app)
         
         app.get '/mail' do
-          @mails = get_maildir_contents
-            .map { |mail| mail.data }
+          @messages = get_maildir_contents
             .reverse
           slim :mail
         end
 
+        app.get '/mail/*' do
+          msg = maildir.get(params[:splat].first)
+          halt 404 if msg.nil?
+          @mail = msg.data
+          @body = extract_mail_body msg.data
+          slim :mail_show
+        end
+
       end
+
     end
   end
 end

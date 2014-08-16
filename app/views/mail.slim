@@ -9,8 +9,10 @@ main
         th Von
         th Datum
     tbody
-      - @mails.each do |mail|
+      - @messages.each do |message|
+        - mail = message.data
         tr
-          td= mail.subject
+          td
+            a href="/mail/#{message.key}" = mail.subject
           td= mail.from.first
           td= mail.date.strftime '%d.%m.%Y %H:%M'

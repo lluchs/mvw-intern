@@ -1,0 +1,8 @@
+header
+  h1 Mail-Archiv
+  h2= @mail.subject
+
+main
+  p
+    strong Von: #{@mail.from.first}
+  p= @body
