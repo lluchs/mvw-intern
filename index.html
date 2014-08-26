@@ -2,6 +2,7 @@
 <html>
 	<head>
 		<title>MVW Intern Kalender</title>
+		<meta charset="utf-8">
 		<script src="bower_components/moment/moment.js"></script>
 		<script src="bower_components/moment/locale/de.js"></script>
 		<script src="bower_components/ractive/ractive.min.js"></script>
@@ -12,9 +13,9 @@
 		<!-- <div type="text/ractive" id="template"> -->
 		<script type="text/ractive" id="template">
 			<p>
-				Monat: <input type="number" value="{{month}}"><br>
-				Jahr: <input type="number" value="{{year}}"><br>
+				<button on-click="prev-month">←</button>
 				<strong>{{monthname}}</strong>
+				<button on-click="next-month">→</button>
 			</p>
 			<table>
 				<tr>
