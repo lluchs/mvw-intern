@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+	<head>
+		<title>MVW Intern Kalender</title>
+		<script src="bower_components/moment/moment.js"></script>
+		<script src="bower_components/moment/locale/de.js"></script>
+		<script src="bower_components/ractive/ractive.min.js"></script>
+	</head>
+	<body>
+		<div id="calendar"></div>
+
+		<!-- <div type="text/ractive" id="template"> -->
+		<script type="text/ractive" id="template">
+			<p>
+				Monat: <input type="number" value="{{month}}"><br>
+				Jahr: <input type="number" value="{{year}}"><br>
+				<strong>{{monthname}}</strong>
+			</p>
+			<table>
+				<tr>
+					{{#weekdays}}
+					<th>{{.}}</th>
+					{{/weekdays}}
+				</tr>
+				{{#weeks}}
+				<tr>
+					{{#days}}
+					<td>{{day}}{{#if outside}}*{{/if}}</td>
+					{{/days}}
+				</tr>
+				{{/weeks}}
+			</table>
+		</script>
+		<script src="calendar.js"></script>
+
+	</body>
+</html>

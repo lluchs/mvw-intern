@@ -1,0 +1,8 @@
+{
+  "name": "mvi",
+  "version": "0.0.0",
+  "dependencies": {
+    "moment": "~2.8.2",
+    "ractive": "~0.5.5"
+  }
+}
