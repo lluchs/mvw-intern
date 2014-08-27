@@ -11,6 +11,7 @@
           return moment().weekday(i).format('dd');
         });
       })(),
+
       // Returns all events for the given day.
       //
       // TODO: Maybe do binary search instead of O(n) filter.
@@ -19,6 +20,11 @@
         return this.get('events').filter(function(event) {
           return day.isSame(event.start, 'day');
         });
+      },
+
+      // Formats a moment time value.
+      formatTime: function(t) {
+        return moment(t).format('LT');
       },
     },
     computed: {

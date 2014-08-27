@@ -30,7 +30,7 @@
 						{{day}}{{#if outside}}*{{/if}}
 						<ul>
 							{{#each getDayEvents(moment) }}
-							<li>{{title}}</li>
+							<li>{{ formatTime(start) }}: {{title}}</li>
 							{{/each}}
 						</ul>
 					</td>
