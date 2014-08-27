@@ -30,7 +30,9 @@
 						{{day}}{{#if outside}}*{{/if}}
 						<ul>
 							{{#each getDayEvents(moment) }}
-							<li>{{ formatTime(start) }}: {{title}}</li>
+							<li on-click="show-event">
+								{{ formatTime(start) }}: {{title}}
+							</li>
 							{{/each}}
 						</ul>
 					</td>
@@ -38,6 +40,14 @@
 				</tr>
 				{{/weeks}}
 			</table>
+			{{#activeEvent}}
+			<p>
+				<button on-click="hide-event">X</button><br>
+				Start: {{ formatTime(start) }}<br>
+				Ende: {{ formatTime(end) }}<br>
+				{{title}}
+			</p>
+			{{/activeEvent}}
 		</script>
 		<script src="calendar.js"></script>
 

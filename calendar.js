@@ -68,6 +68,12 @@
           this.get('month').add(1, 'month');
           this.update('month');
         },
+        'show-event': function(e) {
+          this.set('activeEvent', e.context);
+        },
+        'hide-event': function() {
+          this.set('activeEvent', null);
+        },
       });
     },
   });
