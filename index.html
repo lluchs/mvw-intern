@@ -26,7 +26,14 @@
 				{{#weeks}}
 				<tr>
 					{{#days}}
-					<td>{{day}}{{#if outside}}*{{/if}}</td>
+					<td>
+						{{day}}{{#if outside}}*{{/if}}
+						<ul>
+							{{#each getDayEvents(moment) }}
+							<li>{{title}}</li>
+							{{/each}}
+						</ul>
+					</td>
 					{{/days}}
 				</tr>
 				{{/weeks}}
