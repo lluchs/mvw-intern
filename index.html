@@ -38,16 +38,20 @@
 					</td>
 					{{/days}}
 				</tr>
+				{{#if isSameWeek(days[0].moment, activeEvent.start) }}
+				{{#activeEvent}}
+				<tr>
+					<td colspan=7>
+						<button on-click="hide-event">X</button><br>
+						Start: {{ formatTime(start) }}<br>
+						Ende: {{ formatTime(end) }}<br>
+						{{title}}
+					</td>
+				</tr>
+				{{/activeEvent}}
+				{{/if}}
 				{{/weeks}}
 			</table>
-			{{#activeEvent}}
-			<p>
-				<button on-click="hide-event">X</button><br>
-				Start: {{ formatTime(start) }}<br>
-				Ende: {{ formatTime(end) }}<br>
-				{{title}}
-			</p>
-			{{/activeEvent}}
 		</script>
 		<script src="calendar.js"></script>
 
