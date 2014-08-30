@@ -28,6 +28,9 @@
 					{{#days}}
 					<td>
 						{{day}}{{#if outside}}*{{/if}}
+						{{#if canAdd}}
+						<button on-click="add-event">+</button>
+						{{/if}}
 						<ul>
 							{{#each getDayEvents(moment) }}
 							<li on-click="show-event">
@@ -51,6 +54,15 @@
 			</table>
 
 			<!-- {{>event}} -->
+			{{#if editingEvent}}
+			<strong>Neuer Termin: {{ formatDate(start) }}</strong>
+			<form on-submit="submit-event">
+				Titel: <input type="text" value="{{title}}" required><br>
+				Beginn: <input type="time" value="{{inputStart}}" required><br>
+				Dauer (h): <input type="number" value="{{inputDuration}}" min="0.25" required><br>
+				Beschreibung: <textarea>{{desc}}</textarea><br>
+			</form>
+			{{else}}
 			<h2>{{title}}<button on-click="hide-event">X</button></h2>
 			<p>{{ formatDateTime(start) }} bis {{ formatTime(end) }}</p>
 			<p>{{desc}}</p>
@@ -58,6 +70,7 @@
 				<button on-click="ack-event">Ich bin dabei</button>
 				<button on-click="nack-event">Keine Zeit</button>
 			</p>
+			{{/if}}
 			<!-- {{/event}} -->
 		</script>
 		<script src="calendar.js"></script>

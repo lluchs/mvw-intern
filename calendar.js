@@ -27,6 +27,11 @@
         return moment(t).format('LT');
       },
 
+      // Formats a moment date value.
+      formatDate: function(t) {
+        return moment(t).format('LL');
+      },
+
       // Formats a moment date + time value.
       formatDateTime: function(t) {
         return moment(t).format('LLL');
@@ -67,6 +72,7 @@
     },
     beforeInit: function(options) {
       this.data.events = options.calendarEvents;
+      this.data.canAdd = options.canAdd;
     },
     init: function() {
       this.on({
@@ -80,21 +86,51 @@
         },
         'show-event': function(e) {
           this.set('activeEvent', e.context);
+          this.set('editingEvent', false);
         },
         'hide-event': function() {
           this.set('activeEvent', null);
+          this.set('editingEvent', false);
+        },
+        'add-event': function(e) {
+          var start;
+          start = e.context.moment;
+          this.set('activeEvent', this.defaultEvent(start));
+          this.set('editingEvent', true);
         },
       });
     },
+
+    // Creates an empty event for the given day.
+    defaultEvent: function(day) {
+      return {
+        start: day.clone(),
+        end: day.clone().add(1, 'hour'),
+      };
+    },
   });
 
-  window.calendar = new Calendar({
+  var MVWCalendar = Calendar.extend({
+    defaultEvent: function(day) {
+      return {
+        start: day.clone(),
+        end: day.clone().add(1, 'hour'),
+
+        // Values used only for two-way binding.
+        inputStart: moment().format('HH:mm'),
+        inputDuration: 1,
+      };
+    },
+  });
+
+  window.calendar = new MVWCalendar({
     el: '#calendar',
     calendarEvents: [
       { start: '2014-09-01T10:00', end: '2014-09-01T12:00', title: 'Testtermin 1' },
       { start: '2014-09-08T09:00', end: '2014-09-08T11:00', title: 'Testtermin 2' },
       { start: '2014-09-23T18:00', end: '2014-09-23T19:00', title: 'Testtermin 3', desc: 'foobar' },
     ],
+    canAdd: true,
   });
   calendar.on({
     'ack-event': function(e) {
