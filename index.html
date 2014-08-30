@@ -51,10 +51,13 @@
 			</table>
 
 			<!-- {{>event}} -->
-			<button on-click="hide-event">X</button><br>
-			Start: {{ formatTime(start) }}<br>
-			Ende: {{ formatTime(end) }}<br>
-			{{title}}
+			<h2>{{title}}<button on-click="hide-event">X</button></h2>
+			<p>{{ formatDateTime(start) }} bis {{ formatTime(end) }}</p>
+			<p>{{desc}}</p>
+			<p>
+				<button on-click="ack-event">Ich bin dabei</button>
+				<button on-click="nack-event">Keine Zeit</button>
+			</p>
 			<!-- {{/event}} -->
 		</script>
 		<script src="calendar.js"></script>

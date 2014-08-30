@@ -27,6 +27,11 @@
         return moment(t).format('LT');
       },
 
+      // Formats a moment date + time value.
+      formatDateTime: function(t) {
+        return moment(t).format('LLL');
+      },
+
       // Returns whether the two moments are in the same week.
       isSameWeek: function(m1, m2) {
         return moment(m1).isSame(m2, 'week');
@@ -88,7 +93,15 @@
     calendarEvents: [
       { start: '2014-09-01T10:00', end: '2014-09-01T12:00', title: 'Testtermin 1' },
       { start: '2014-09-08T09:00', end: '2014-09-08T11:00', title: 'Testtermin 2' },
-      { start: '2014-09-23T18:00', end: '2014-09-23T19:00', title: 'Testtermin 3' },
+      { start: '2014-09-23T18:00', end: '2014-09-23T19:00', title: 'Testtermin 3', desc: 'foobar' },
     ],
+  });
+  calendar.on({
+    'ack-event': function(e) {
+      // Ajax...
+    },
+    'nack-event': function(e) {
+      // Ajax...
+    },
   });
 })();
