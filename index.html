@@ -42,16 +42,20 @@
 				{{#activeEvent}}
 				<tr>
 					<td colspan=7>
-						<button on-click="hide-event">X</button><br>
-						Start: {{ formatTime(start) }}<br>
-						Ende: {{ formatTime(end) }}<br>
-						{{title}}
+						{{>event}}
 					</td>
 				</tr>
 				{{/activeEvent}}
 				{{/if}}
 				{{/weeks}}
 			</table>
+
+			<!-- {{>event}} -->
+			<button on-click="hide-event">X</button><br>
+			Start: {{ formatTime(start) }}<br>
+			Ende: {{ formatTime(end) }}<br>
+			{{title}}
+			<!-- {{/event}} -->
 		</script>
 		<script src="calendar.js"></script>
 
