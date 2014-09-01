@@ -55,13 +55,11 @@
 
 			<!-- {{>event}} -->
 			{{#if editingEvent}}
-			<strong>Neuer Termin: {{ formatDate(start) }}</strong>
-			<form on-submit="submit-event">
-				Titel: <input type="text" value="{{title}}" required><br>
-				Beginn: <input type="time" value="{{inputStart}}" required><br>
-				Dauer (h): <input type="number" value="{{inputDuration}}" min="0.25" required><br>
-				Beschreibung: <textarea>{{desc}}</textarea><br>
-			</form>
+			{{#if id}}
+			{{>editEvent}}
+			{{else}}
+			{{>newEvent}}
+			{{/if}}
 			{{else}}
 			<h2>{{title}}<button on-click="hide-event">X</button></h2>
 			<p>{{ formatDateTime(start) }} bis {{ formatTime(end) }}</p>
@@ -72,6 +70,36 @@
 			</p>
 			{{/if}}
 			<!-- {{/event}} -->
+
+			<!-- {{>newEvent}} -->
+			<strong>Neuer Termin: {{ formatDate(start) }}</strong>
+			{{#if type}}
+			{{>eventForm}}
+			{{else}}
+			<ul>
+				{{#types}}
+				<li style="background: {{color}}"
+				    on-click="set-event-type:{{name}}">
+					{{name}}
+				</li>
+				{{/types}}
+			</ul>
+			{{/if}}
+			<!-- {{/newEvent}} -->
+
+			<!-- {{>editEvent}} -->
+			<strong>Termin bearbeiten: {{ formatDate(start) }}</strong>
+			{{>eventForm}}
+			<!-- {{/editEvent}} -->
+
+			<!-- {{>eventForm}} -->
+			<form on-submit="submit-event">
+				Titel: <input type="text" value="{{title}}" required><br>
+				Beginn: <input type="time" value="{{inputStart}}" required><br>
+				Dauer (h): <input type="number" value="{{inputDuration}}" min="0.25" required><br>
+				Beschreibung: <textarea>{{desc}}</textarea><br>
+			</form>
+			<!-- {{/eventForm}} -->
 		</script>
 		<script src="calendar.js"></script>
 

@@ -111,6 +111,33 @@
   });
 
   var MVWCalendar = Calendar.extend({
+    beforeInit: function() {
+      this._super.apply(this, arguments);
+      this.data.types = [
+        {
+          name: 'Probe',
+          color: 'blue',
+        },
+        {
+          name: 'Auftritt',
+          color: 'red',
+        },
+        {
+          name: 'Ständchen',
+          color: 'green',
+        },
+      ];
+    },
+
+    init: function() {
+      this._super.apply(this, arguments);
+      this.on({
+        'set-event-type': function(e, type) {
+          this.set('activeEvent.type', type);
+        },
+      });
+    },
+
     defaultEvent: function(day) {
       return {
         start: day.clone(),
