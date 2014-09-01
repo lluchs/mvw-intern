@@ -135,6 +135,20 @@
         'set-event-type': function(e, type) {
           this.set('activeEvent.type', type);
         },
+        'submit-event': function(e) {
+          var event, match;
+          e.original.preventDefault();
+          event = this.get('activeEvent');
+          match = event.inputStart.match(/(\d+):(\d+)/);
+          if (!match) {
+            this.set('activeEvent.error', 'Ungültige Startzeit.');
+            return;
+          }
+          event.start.hour(+match[1]).minute(+match[2]);
+          event.end = event.start.clone().add(event.inputDuration, 'hours');
+          this.get('events').push(event);
+          this.set('activeEvent', null);
+        },
       });
     },
 

@@ -96,8 +96,9 @@
 			<form on-submit="submit-event">
 				Titel: <input type="text" value="{{title}}" required><br>
 				Beginn: <input type="time" value="{{inputStart}}" required><br>
-				Dauer (h): <input type="number" value="{{inputDuration}}" min="0.25" required><br>
+				Dauer (h): <input type="number" value="{{inputDuration}}" min="0" required><br>
 				Beschreibung: <textarea>{{desc}}</textarea><br>
+				<input type="submit">
 			</form>
 			<!-- {{/eventForm}} -->
 		</script>
