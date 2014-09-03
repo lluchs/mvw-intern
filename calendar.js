@@ -84,6 +84,12 @@
           this.get('month').add(1, 'month');
           this.update('month');
         },
+        'set-active-day': function(e, day) {
+          this.set('activeDay', day);
+        },
+        'hide-active-day': function(e, day) {
+          this.set('activeDay', null);
+        },
         'show-event': function(e) {
           this.set('activeEvent', e.context);
           this.set('editingEvent', false);

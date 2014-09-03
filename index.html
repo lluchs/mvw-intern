@@ -26,7 +26,7 @@
 				{{#weeks}}
 				<tr>
 					{{#days}}
-					<td>
+					<td on-click="set-active-day:{{moment}}">
 						{{day}}{{#if outside}}*{{/if}}
 						{{#if canAdd}}
 						<button on-click="add-event">+</button>
@@ -41,6 +41,21 @@
 					</td>
 					{{/days}}
 				</tr>
+				{{#if isSameWeek(days[0].moment, activeDay) }}
+				<tr>
+					<td colspan=7>
+						<button on-click="hide-active-day">X</button>
+						<h2>{{ formatDate(activeDay) }}</h2>
+						<ul>
+							{{#each getDayEvents(activeDay) }}
+							<li on-click="show-event">
+								{{ formatTime(start) }}: {{title}}
+							</li>
+							{{/each}}
+						</ul>
+					</td>
+				</tr>
+				{{/if}}
 				{{#if isSameWeek(days[0].moment, activeEvent.start) }}
 				{{#activeEvent}}
 				<tr>
