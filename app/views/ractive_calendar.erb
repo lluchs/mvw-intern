@@ -1,0 +1,106 @@
+<p>
+	<button on-click="prev-month">←</button>
+	<strong>{{monthname}}</strong>
+	<button on-click="next-month">→</button>
+</p>
+<table>
+	<tr>
+		{{#weekdays}}
+		<th>{{.}}</th>
+		{{/weekdays}}
+	</tr>
+	{{#weeks}}
+	<tr>
+		{{#days}}
+		<td on-click="set-active-day:{{moment}}">
+			{{day}}{{#if outside}}*{{/if}}
+			{{#if canAdd}}
+			<button on-click="add-event">+</button>
+			{{/if}}
+			<ul>
+				{{#each getDayEvents(moment) }}
+				<li on-click="show-event">
+					{{ formatTime(start) }}: {{title}}
+				</li>
+				{{/each}}
+			</ul>
+		</td>
+		{{/days}}
+	</tr>
+	{{#if isSameWeek(days[0].moment, activeDay) }}
+	<tr>
+		<td colspan=7>
+			<button on-click="hide-active-day">X</button>
+			<h2>{{ formatDate(activeDay) }}</h2>
+			<ul>
+				{{#each getDayEvents(activeDay) }}
+				<li on-click="show-event">
+					{{ formatTime(start) }}: {{title}}
+				</li>
+				{{/each}}
+			</ul>
+		</td>
+	</tr>
+	{{/if}}
+	{{#if isSameWeek(days[0].moment, activeEvent.start) }}
+	{{#activeEvent}}
+	<tr>
+		<td colspan=7>
+			{{>event}}
+		</td>
+	</tr>
+	{{/activeEvent}}
+	{{/if}}
+	{{/weeks}}
+</table>
+
+<!-- {{>event}} -->
+{{#if editingEvent}}
+{{#if id}}
+{{>editEvent}}
+{{else}}
+{{>newEvent}}
+{{/if}}
+{{else}}
+<h2>{{title}}<button on-click="hide-event">X</button></h2>
+<p>{{ formatDateTime(start) }} bis {{ formatTime(end) }}</p>
+<p>{{desc}}</p>
+<p>
+	<button on-click="ack-event">Ich bin dabei</button>
+	<button on-click="nack-event">Keine Zeit</button>
+</p>
+{{/if}}
+<!-- {{/event}} -->
+
+<!-- {{>newEvent}} -->
+<strong>Neuer Termin: {{ formatDate(start) }}</strong>
+{{#if type}}
+{{>eventForm}}
+{{else}}
+<ul>
+	{{#types}}
+	<li style="background: {{color}}"
+		on-click="set-event-type:{{name}}">
+		{{name}}
+	</li>
+	{{/types}}
+</ul>
+{{/if}}
+<!-- {{/newEvent}} -->
+
+<!-- {{>editEvent}} -->
+<strong>Termin bearbeiten: {{ formatDate(start) }}</strong>
+{{>eventForm}}
+<!-- {{/editEvent}} -->
+
+<!-- {{>eventForm}} -->
+<form on-submit="submit-event">
+	Titel: <input type="text" value="{{title}}" required><br>
+	Beginn: <input type="time" value="{{inputStart}}" required><br>
+	Dauer (h): <input type="number" value="{{inputDuration}}" min="0" required><br>
+	Beschreibung: <textarea>{{desc}}</textarea><br>
+	<input type="submit"><br>
+	<strong>{{error}}</strong>
+</form>
+<!-- {{/eventForm}} -->
+<!-- vi: ft=mustache -->

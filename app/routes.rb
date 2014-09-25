@@ -7,6 +7,7 @@ module MvwIntern
       app.register Auth
       app.register User
       app.register Mail
+      app.register Calendar
     end
   end
 end
