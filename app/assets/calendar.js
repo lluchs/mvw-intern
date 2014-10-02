@@ -6,7 +6,7 @@
   'use strict';
   moment.locale('de');
 
-  var Calendar = Ractive.extend({
+  var MVWCalendar  = Ractive.extend({
     template: '#template',
     data: {
       month: moment().startOf('month'),
@@ -15,6 +15,20 @@
           return moment().weekday(i).format('dd');
         });
       })(),
+      types: [
+        {
+          name: 'Probe',
+          color: 'blue',
+        },
+        {
+          name: 'Auftritt',
+          color: 'red',
+        },
+        {
+          name: 'Ständchen',
+          color: 'green',
+        },
+      ],
 
       // Returns all events for the given day.
       //
@@ -108,40 +122,6 @@
           this.set('activeEvent', this.defaultEvent(start));
           this.set('editingEvent', true);
         },
-      });
-    },
-
-    // Creates an empty event for the given day.
-    defaultEvent: function(day) {
-      return {
-        start: day.clone(),
-        end: day.clone().add(1, 'hour'),
-      };
-    },
-  });
-
-  var MVWCalendar = Calendar.extend({
-    beforeInit: function() {
-      this._super.apply(this, arguments);
-      this.data.types = [
-        {
-          name: 'Probe',
-          color: 'blue',
-        },
-        {
-          name: 'Auftritt',
-          color: 'red',
-        },
-        {
-          name: 'Ständchen',
-          color: 'green',
-        },
-      ];
-    },
-
-    init: function() {
-      this._super.apply(this, arguments);
-      this.on({
         'set-event-type': function(e, type) {
           this.set('activeEvent.type', type);
         },
@@ -162,6 +142,7 @@
       });
     },
 
+    // Creates an empty event for the given day.
     defaultEvent: function(day) {
       return {
         start: day.clone(),
