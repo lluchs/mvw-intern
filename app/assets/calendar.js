@@ -1,6 +1,7 @@
 //= require moment/moment.js
 //= require moment/locale/de.js
 //= require ractive/ractive.min.js
+//= require reqwest/reqwest.js
 
 (function() {
   'use strict';
@@ -91,6 +92,7 @@
     beforeInit: function(options) {
       this.data.events = options.calendarEvents;
       this.data.canAdd = options.canAdd;
+      this.saveEvent = options.saveEvent;
     },
     init: function() {
       this.on({
@@ -136,8 +138,13 @@
           }
           event.start.hour(+match[1]).minute(+match[2]);
           event.end = event.start.clone().add(event.inputDuration, 'hours');
-          this.get('events').push(event);
-          this.set('activeEvent', null);
+          var self = this;
+          this.saveEvent(event).then(function(result) {
+            self.get('events').push(JSON.parse(result));
+            self.set('activeEvent', null);
+          }, function(error) {
+            self.set('activeEvent.error', error);
+          });
         },
       });
     },
@@ -147,6 +154,8 @@
       return {
         start: day.clone(),
         end: day.clone().add(1, 'hour'),
+        title: '',
+        desc: '',
 
         // Values used only for two-way binding.
         inputStart: moment().format('HH:mm'),
@@ -155,21 +164,32 @@
     },
   });
 
-  window.calendar = new MVWCalendar({
-    el: '#calendar',
-    calendarEvents: [
-      { start: '2014-09-01T10:00', end: '2014-09-01T12:00', title: 'Testtermin 1' },
-      { start: '2014-09-08T09:00', end: '2014-09-08T11:00', title: 'Testtermin 2' },
-      { start: '2014-09-23T18:00', end: '2014-09-23T19:00', title: 'Testtermin 3', desc: 'foobar' },
-    ],
-    canAdd: true,
-  });
-  calendar.on({
-    'ack-event': function(e) {
-      // Ajax...
-    },
-    'nack-event': function(e) {
-      // Ajax...
-    },
+  reqwest({
+    url: '/calendar/events',
+    type: 'json',
+  }).then(function(events) {
+
+    window.calendar = new MVWCalendar({
+      el: '#calendar',
+      calendarEvents: events,
+      canAdd: true,
+
+      saveEvent: function(event) {
+        return reqwest({
+          url: '/calendar/events',
+          method: 'post',
+          data: event,
+        });
+      },
+    });
+    calendar.on({
+      'ack-event': function(e) {
+        // Ajax...
+      },
+      'nack-event': function(e) {
+        // Ajax...
+      },
+    });
+
   });
 })();
