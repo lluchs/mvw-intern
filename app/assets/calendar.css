@@ -56,6 +56,11 @@
 #calendar .active-day {
 }
 
+#calendar .active-day > div {
+    /* Uncollapse margins to make the transition work. */
+    padding: 1px 0;
+}
+
 #calendar .close {
     float: right;
     margin: 1em;

@@ -11,6 +11,7 @@
     "jquery": "~2.1.1",
     "moment": "~2.8.2",
     "ractive": "~0.6.0",
-    "reqwest": "~1.1.2"
+    "reqwest": "~1.1.2",
+    "ractive-transitions-slide": "~0.1.2"
   }
 }

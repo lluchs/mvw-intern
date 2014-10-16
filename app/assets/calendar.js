@@ -1,6 +1,7 @@
 //= require moment/moment.js
 //= require moment/locale/de.js
-//= require ractive/ractive.min.js
+//= require ractive/ractive.js
+//= require ractive-transitions-slide/ractive-transitions-slide.js
 //= require reqwest/reqwest.js
 
 (function() {
