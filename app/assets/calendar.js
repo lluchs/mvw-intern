@@ -60,6 +60,11 @@
       isSameWeek: function(m1, m2) {
         return moment(m1).isSame(m2, 'week');
       },
+
+      // Returns whether the two moments are on the same day.
+      isSameDay: function(m1, m2) {
+        return moment(m1).isSame(m2, 'day');
+      },
     },
     computed: {
       monthname: function() {

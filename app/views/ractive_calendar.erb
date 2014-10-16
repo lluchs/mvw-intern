@@ -43,8 +43,7 @@
 			</ul>
 		</td>
 	</tr>
-	{{/if}}
-	{{#if isSameWeek(days[0].moment, activeEvent.start) }}
+	{{#if isSameDay(activeDay, activeEvent.start) }}
 	{{#activeEvent}}
 	<tr>
 		<td colspan=7>
@@ -52,6 +51,7 @@
 		</td>
 	</tr>
 	{{/activeEvent}}
+	{{/if}}
 	{{/if}}
 	{{/weeks}}
 </table>
