@@ -99,7 +99,7 @@
       this.data.canAdd = options.canAdd;
       this.saveEvent = options.saveEvent;
     },
-    init: function() {
+    onrender: function() {
       this.on({
         'prev-month': function() {
           this.get('month').subtract(1, 'month');
@@ -175,6 +175,7 @@
   }).then(function(events) {
 
     window.calendar = new MVWCalendar({
+      debug: true,
       el: '#calendar',
       calendarEvents: events,
       canAdd: true,
