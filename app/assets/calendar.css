@@ -1,0 +1,65 @@
+/* Calendar widget */
+
+#calendar .monthpicker {
+    text-align: center;
+}
+
+#calendar .month {
+    display: inline-block;
+    width: 10em;
+}
+
+#calendar table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+#calendar td.day {
+    vertical-align: top;
+    transition: color 1s;
+    cursor: pointer;
+}
+
+#calendar td.day:hover {
+    color: red;
+}
+
+/* Dates not in the selected month. */
+#calendar td.outside {
+    opacity: 0.5;
+}
+
+#calendar span.day {
+    font-size: 150%;
+    font-weight: bold;
+}
+
+/* Only show + buttons when hovering. */
+#calendar button.add {
+    display: none;
+    float: right;
+    margin: 0 1em;
+}
+
+#calendar td:hover button.add {
+    display: inline-block;
+}
+
+/* Events */
+#calendar .day ul {
+    margin: 0;
+    padding: 0 0 0 20px;
+}
+
+/* Day view */
+#calendar .active-day {
+}
+
+#calendar .close {
+    float: right;
+    margin: 1em;
+}
+
+#calendar .no-events {
+    font-style: italic;
+}
