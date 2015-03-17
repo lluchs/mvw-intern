@@ -17,7 +17,7 @@ module MvwIntern
           halt 403 unless current_user.admin
 
           event = Models::Event.new
-          event.set_fields(params, [:start, :end, :title, :desc, :type])
+          event.set_fields(params, [:start, :duration, :title, :desc, :type])
           event.save
 
           event.to_json
@@ -29,7 +29,7 @@ module MvwIntern
           event = Models::Event[params[:id]]
           halt 404 if event.nil?
 
-          event.set_fields(params, [:start, :end, :title, :desc, :type])
+          event.set_fields(params, [:start, :duration, :title, :desc, :type])
           event.save
 
           event.to_json

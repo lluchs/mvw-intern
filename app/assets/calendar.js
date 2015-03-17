@@ -42,6 +42,11 @@
         });
       },
 
+      // Returns the event end time as moment object.
+      eventEnd: function(event) {
+        return moment(event.start).clone().add(moment.duration(event.duration));
+      },
+
       // Formats a moment time value.
       formatTime: function(t) {
         return moment(t).format('LT');
@@ -143,7 +148,7 @@
             return;
           }
           event.start.hour(+match[1]).minute(+match[2]);
-          event.end = event.start.clone().add(event.inputDuration, 'hours');
+          event.duration = moment.duration(event.inputDuration, 'hours');
           var self = this;
           this.saveEvent(event).then(function(result) {
             self.get('events').push(JSON.parse(result));
@@ -159,7 +164,7 @@
     defaultEvent: function(day) {
       return {
         start: day.clone(),
-        end: day.clone().add(1, 'hour'),
+        duration: moment.duration(1, 'hour'),
         title: '',
         desc: '',
 

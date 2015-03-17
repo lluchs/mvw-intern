@@ -67,7 +67,7 @@
 {{/if}}
 {{else}}
 <h2>{{title}}<button on-click="hide-event">X</button></h2>
-<p>{{ formatDateTime(start) }} bis {{ formatTime(end) }}</p>
+<p>{{ formatDateTime(start) }} bis {{ formatTime(eventEnd(this)) }}</p>
 <p>{{desc}}</p>
 <p>
 	<button on-click="ack-event">Ich bin dabei</button>
@@ -107,4 +107,4 @@
 	<strong>{{error}}</strong>
 </form>
 <!-- {{/eventForm}} -->
-<!-- vi: ft=mustache -->
+<!-- vim: set ft=mustache: -->

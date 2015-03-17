@@ -12,7 +12,7 @@ module MvwIntern
 
     # Database configuration
     configure do
-      set :database_url, ENV['DATABASE_URL'] || 'sqlite://db/db.sqlite'
+      set :database_url, ENV['DATABASE_URL'] || 'postgres://localhost:5432/mvw-intern'
       database
       require './app/models'
     end
