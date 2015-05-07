@@ -10,8 +10,9 @@
     "pure": "~0.5.0",
     "jquery": "~2.1.1",
     "moment": "~2.8.2",
-    "ractive": "~0.6.0",
-    "reqwest": "~1.1.2",
-    "ractive-transitions-slide": "~0.1.2"
+    "ractive": "~0.7.3",
+    "ractive-transitions-slide": "~0.1.2",
+    "fetch": "~0.8.1",
+    "es6-promise": "~2.1.0"
   }
 }

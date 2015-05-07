@@ -2,138 +2,108 @@
 //= require moment/locale/de.js
 //= require ractive/ractive.js
 //= require ractive-transitions-slide/ractive-transitions-slide.js
-//= require reqwest/reqwest.js
+//= require es6-promise/promise.js
+//= require fetch/fetch.js
 
 (function() {
   'use strict';
   moment.locale('de');
 
+  var Datepicker = Ractive.extend({
+    template: '{{>content}}',
+    isolated: false,
+    oninit: function() {
+      this.observe({
+        moment: function(m) {
+          m = moment(m);
+          this.set('date', m.format('DD.MM.'));
+          this.set('time', m.format('H:mm'));
+        },
+        date: function(d) {
+          var m, n;
+          m = moment(d, 'DD.MM.');
+          n = this.get('moment')
+            .month(m.month())
+            .date(m.date())
+          this.set('moment', n);
+        },
+        time: function(t) {
+          var m, n;
+          m = moment(t, 'H:mm');
+          n = this.get('moment')
+            .hour(m.hour())
+            .minute(m.minute())
+          this.set('moment', n);
+        },
+      });
+    },
+  });
+
   var MVWCalendar  = Ractive.extend({
     template: '#template',
-    data: {
-      month: moment().startOf('month'),
-      weekdays: (function() {
-        return [0, 1, 2, 3, 4, 5, 6].map(function(i) {
-          return moment().weekday(i).format('dd');
-        });
-      })(),
-      types: [
-        {
-          name: 'Probe',
-          color: 'blue',
-        },
-        {
-          name: 'Auftritt',
-          color: 'red',
-        },
-        {
-          name: 'Ständchen',
-          color: 'green',
-        },
-      ],
-
-      // Returns all events for the given day.
-      //
-      // TODO: Maybe do binary search instead of O(n) filter.
-      getDayEvents: function(day) {
-        day = moment(day);
-        return this.get('events').filter(function(event) {
-          return day.isSame(event.start, 'day');
-        });
-      },
-
-      // Returns the event end time as moment object.
-      eventEnd: function(event) {
-        return moment(event.start).clone().add(moment.duration(event.duration));
-      },
-
-      // Formats a moment time value.
-      formatTime: function(t) {
-        return moment(t).format('LT');
-      },
-
-      // Formats a moment date value.
-      formatDate: function(t) {
-        return moment(t).format('LL');
-      },
-
-      // Formats a moment date + time value.
-      formatDateTime: function(t) {
-        return moment(t).format('LLL');
-      },
-
-      // Returns whether the two moments are in the same week.
-      isSameWeek: function(m1, m2) {
-        return moment(m1).isSame(m2, 'week');
-      },
-
-      // Returns whether the two moments are on the same day.
-      isSameDay: function(m1, m2) {
-        return moment(m1).isSame(m2, 'day');
-      },
+    components: {
+      datepicker: Datepicker,
     },
-    computed: {
-      monthname: function() {
-        var month;
-        month = this.get('month');
-        return month.format('MMMM YYYY');
-      },
-      weeks: function() {
-        var month, m, weeks, days;
-        month = this.get('month');
-        // Start with the first day of the given month.
-        m = month.clone().startOf('month');
-        // Go back to the first day of the week.
-        while (m.weekday()) m.subtract(1, 'day');
-        weeks = [];
-        while (m.isBefore(month.clone().add(1, 'month'))) {
-          days = [];
-          for (var cmp = m.clone().add(1, 'week'); m.isBefore(cmp); m.add(1, 'day')) {
-            days.push({
-              moment: m.clone(),
-              day: m.date(),
-              outside: m.month() != month.month(),
-            });
-          }
-          weeks.push({days: days});
-        }
-        return weeks;
-      },
-    },
-    beforeInit: function(options) {
-      this.data.events = options.calendarEvents;
-      this.data.canAdd = options.canAdd;
-      this.saveEvent = options.saveEvent;
+    data: function() {
+      return {
+        year: moment().year(),
+        types: [
+          {
+            name: 'Probe',
+            color: 'blue',
+          },
+          {
+            name: 'Auftritt',
+            color: 'red',
+          },
+          {
+            name: 'Ständchen',
+            color: 'green',
+          },
+        ],
+
+        // Returns the event end time as moment object.
+        eventEnd: function(event) {
+          return moment(event.start).clone().add(moment.duration(event.duration));
+        },
+
+        // Formats a moment time value.
+        formatTime: function(t) {
+          return moment(t).format('LT');
+        },
+
+        // Formats a moment date value.
+        formatDate: function(t) {
+          return moment(t).format('LL');
+        },
+
+        // Formats a moment date + time value.
+        formatDateTime: function(t) {
+          return moment(t).format('LLL');
+        },
+
+        // Returns whether the two moments are in the same week.
+        isSameWeek: function(m1, m2) {
+          return moment(m1).isSame(m2, 'week');
+        },
+
+        // Returns whether the two moments are on the same day.
+        isSameDay: function(m1, m2) {
+          return moment(m1).isSame(m2, 'day');
+        },
+      }
     },
     onrender: function() {
       this.on({
-        'prev-month': function() {
-          this.get('month').subtract(1, 'month');
-          this.update('month');
-        },
-        'next-month': function() {
-          this.get('month').add(1, 'month');
-          this.update('month');
-        },
-        'set-active-day': function(e, day) {
-          this.set('activeDay', day);
-        },
-        'hide-active-day': function(e, day) {
-          this.set('activeDay', null);
-        },
-        'show-event': function(e) {
-          this.set('activeEvent', e.context);
-          this.set('editingEvent', false);
-        },
-        'hide-event': function() {
-          this.set('activeEvent', null);
-          this.set('editingEvent', false);
+        'toggle-event': function(e) {
+          this.set(e.keypath + '.active', !e.context.active);
         },
         'add-event': function(e) {
-          var start;
-          start = e.context.moment;
-          this.set('activeEvent', this.defaultEvent(start));
-          this.set('editingEvent', true);
+          var event;
+          event = this.defaultEvent(moment().year(this.get('year')));
+          event.active = true;
+          event.editing = true;
+          this.get('events').unshift(event);
         },
         'set-event-type': function(e, type) {
           this.set('activeEvent.type', type);
@@ -141,21 +111,29 @@
         'submit-event': function(e) {
           var event, match;
           e.original.preventDefault();
-          event = this.get('activeEvent');
-          match = event.inputStart.match(/(\d+):(\d+)/);
-          if (!match) {
-            this.set('activeEvent.error', 'Ungültige Startzeit.');
-            return;
-          }
-          event.start.hour(+match[1]).minute(+match[2]);
+          event = e.context;
           event.duration = moment.duration(event.inputDuration, 'hours');
           var self = this;
           this.saveEvent(event).then(function(result) {
-            self.get('events').push(JSON.parse(result));
-            self.set('activeEvent', null);
+            self.splice('events', +e.keypath.split('.').reverse()[0], 1);
+            self.unshift('events', result);
           }, function(error) {
-            self.set('activeEvent.error', error);
+            self.set(e.keypath+'.error', error);
           });
+        },
+      });
+
+      this.observe({
+        'year': function(year) {
+          var r = this;
+          r.set('eventsLoading', true);
+          r.fetchEvents(year)
+            .then(function(events) {
+              if (r.get('year') == year) {
+                r.set('events', events);
+                r.set('eventsLoading', false);
+              }
+            })
         },
       });
     },
@@ -167,41 +145,68 @@
         duration: moment.duration(1, 'hour'),
         title: '',
         desc: '',
+        type: this.get('types')[0].name,
 
         // Values used only for two-way binding.
-        inputStart: moment().format('HH:mm'),
         inputDuration: 1,
       };
     },
+
+    // Sets the given year.
+    setYear: function(year) {
+      this.set('year', year);
+    },
+
+    // Fetches events of the given year, returning a promise.
+    fetchEvents: function(year) {
+      return fetch('/calendar/events/' + year)
+        .then(status)
+        .then(function(response) {
+          return response.json();
+        })
+    },
+
+    saveEvent: function(event) {
+      return fetch('/calendar/events', {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(eventToJSON(event)),
+      })
+        .then(status)
+        .then(function(response) {
+          return response.json();
+        })
+    },
   });
 
-  reqwest({
-    url: '/calendar/events',
-    type: 'json',
-  }).then(function(events) {
-
-    window.calendar = new MVWCalendar({
-      debug: true,
-      el: '#calendar',
-      calendarEvents: events,
-      canAdd: true,
-
-      saveEvent: function(event) {
-        return reqwest({
-          url: '/calendar/events',
-          method: 'post',
-          data: event,
-        });
-      },
-    });
-    calendar.on({
-      'ack-event': function(e) {
-        // Ajax...
-      },
-      'nack-event': function(e) {
-        // Ajax...
-      },
-    });
+  window.calendar = new MVWCalendar({
+    debug: true,
+    el: '#calendar',
+    data: function() {
+      return {
+        canEdit: true,
+      }
+    },
 
   });
+
+  function status(response) {
+    if (response.status >= 200 && response.status < 300) {
+      return response
+    }
+    throw new Error(response.statusText)
+  }
+
+  function eventToJSON(event) {
+    return {
+      start: event.start,
+      duration: event.duration.toString(),
+      title: event.title,
+      desc: event.desc,
+      type: event.type,
+    };
+  }
+
 })();

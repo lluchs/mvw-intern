@@ -13,11 +13,17 @@ module MvwIntern
           Models::Event.all.to_json
         end
 
+        app.get '/calendar/events/:year' do
+          Models::Event.where('EXTRACT(YEAR FROM start) = :year', year: params[:year]).to_json
+        end
+
         app.post '/calendar/events' do
           halt 403 unless current_user.admin
 
+          event_json = JSON.parse request.body.read
+          puts event_json
           event = Models::Event.new
-          event.set_fields(params, [:start, :duration, :title, :desc, :type])
+          event.set start: event_json['start'], duration: event_json['duration'], title: event_json['title'], desc: event_json['desc'], type: event_json['type']
           event.save
 
           event.to_json

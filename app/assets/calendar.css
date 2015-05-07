@@ -1,10 +1,10 @@
 /* Calendar widget */
 
-#calendar .monthpicker {
+#calendar .yearpicker {
     text-align: center;
 }
 
-#calendar .month {
+#calendar .year {
     display: inline-block;
     width: 10em;
 }

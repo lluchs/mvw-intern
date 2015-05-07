@@ -1,110 +1,93 @@
-<p class="monthpicker">
-	<button on-click="prev-month">←</button>
-	<strong class="month">{{monthname}}</strong>
-	<button on-click="next-month">→</button>
+<p class="yearpicker">
+	<button class="pure-button" on-click="setYear(year - 1)">←</button>
+	<strong class="year">{{year}}</strong>
+	<button class="pure-button" on-click="setYear(year + 1)">→</button>
 </p>
-<table>
-	<tr>
-		{{#weekdays}}
-		<th>{{.}}</th>
-		{{/weekdays}}
-	</tr>
-	{{#weeks}}
-	<tr>
-		{{#days}}
-		<td class="day {{#if outside}}outside{{/if}}" on-click="set-active-day:{{moment}}">
-			<span class="day">{{day}}</span>
-			{{#if canAdd}}
-			<button class="add" on-click="add-event">+</button>
-			{{/if}}
-			<ul>
-				{{#each getDayEvents(moment) }}
-				<li on-click="show-event">
-					{{title}}
-				</li>
-				{{/each}}
-			</ul>
-		</td>
-		{{/days}}
-	</tr>
-	{{#if isSameWeek(days[0].moment, activeDay) }}
-	<tr>
-		<td class="active-day" colspan=7>
-			<div intro-outro="slide">
-				<button class="close" on-click="hide-active-day">X</button>
-				<h2>{{ formatDate(activeDay) }}</h2>
-				<ul>
-					{{#each getDayEvents(activeDay) }}
-					<li on-click="show-event">
-						{{ formatTime(start) }} bis {{ formatTime(end) }}: {{title}}
-					</li>
-					{{else}}
-					<li class="no-events">Keine Termine!</li>
-					{{/each}}
-				</ul>
-			</div>
-		</td>
-	</tr>
-	{{#if isSameDay(activeDay, activeEvent.start) }}
-	{{#activeEvent}}
-	<tr>
-		<td colspan=7>
-			{{>event}}
-		</td>
-	</tr>
-	{{/activeEvent}}
-	{{/if}}
-	{{/if}}
-	{{/weeks}}
-</table>
 
-<!-- {{>event}} -->
-{{#if editingEvent}}
-{{#if id}}
-{{>editEvent}}
-{{else}}
-{{>newEvent}}
-{{/if}}
-{{else}}
-<h2>{{title}}<button on-click="hide-event">X</button></h2>
-<p>{{ formatDateTime(start) }} bis {{ formatTime(eventEnd(this)) }}</p>
-<p>{{desc}}</p>
-<p>
-	<button on-click="ack-event">Ich bin dabei</button>
-	<button on-click="nack-event">Keine Zeit</button>
-</p>
-{{/if}}
-<!-- {{/event}} -->
-
-<!-- {{>newEvent}} -->
-<strong>Neuer Termin: {{ formatDate(start) }}</strong>
-{{#if type}}
-{{>eventForm}}
-{{else}}
 <ul>
-	{{#types}}
-	<li style="background: {{color}}"
-		on-click="set-event-type:{{name}}">
-		{{name}}
-	</li>
-	{{/types}}
+{{#canEdit}}
+	<li><button class="pure-button" on-click="add-event">Neu‥</button></li>
+{{/canEdit}}
+{{#eventsLoading}}
+	<li class="no-events">Lädt‥</li>
+{{else}}
+	{{#events}}
+		<li>
+			<span on-click="toggle-event">
+				{{ formatDateTime(start) }}: <strong>{{title}}</strong>
+			</span>
+			{{#if active}}
+				{{>event}}
+			{{/if}}
+		</li>
+	{{else}}
+		<li class="no-events">Keine Termine!</li>
+	{{/events}}
+{{/eventsLoading}}
 </ul>
+
+{{#partial event}}
+{{#if editing}}
+	{{#if id}}
+		{{>editEvent}}
+	{{else}}
+		{{>newEvent}}
+	{{/if}}
+{{else}}
+	<h2>{{title}}</h2>
+	<p>{{ formatDateTime(start) }} bis {{ formatTime(eventEnd(this)) }}</p>
+	<p>{{desc}}</p>
 {{/if}}
-<!-- {{/newEvent}} -->
+{{/partial}}
 
-<!-- {{>editEvent}} -->
-<strong>Termin bearbeiten: {{ formatDate(start) }}</strong>
+{{#partial newEvent}}
+<h3>Neuer Termin</h3>
 {{>eventForm}}
-<!-- {{/editEvent}} -->
+{{/partial}}
 
-<!-- {{>eventForm}} -->
-<form on-submit="submit-event">
-	Titel: <input type="text" value="{{title}}" required><br>
-	Beginn: <input type="time" value="{{inputStart}}" required><br>
-	Dauer (h): <input type="number" value="{{inputDuration}}" min="0" required><br>
-	Beschreibung: <textarea value="{{desc}}"></textarea><br>
-	<input type="submit"><br>
-	<strong>{{error}}</strong>
+{{#partial editEvent}}
+<h3>Termin bearbeiten</h3>
+{{>eventForm}}
+{{/partial}}
+
+{{#partial eventForm}}
+<form class="pure-form pure-form-aligned" on-submit="submit-event">
+	<fieldset>
+		<div class="pure-control-group">
+			<label>Typ</label>
+			<select value="{{type}}">
+				{{#types}}
+				<option value="{{name}}">{{name}}</option>
+				{{/types}}
+			</select>
+		</div>
+		<div class="pure-control-group">
+			<label>Titel</label>
+			<input type="text" value="{{title}}" required>
+		</div>
+		<datepicker moment="{{start}}">
+			<div class="pure-control-group">
+				<label>Datum</label>
+				<input type="text" value="{{date}}" required>
+			</div>
+			<div class="pure-control-group">
+				<label>Beginn</label>
+				<input type="text" value="{{time}}" required>
+			</div>
+		</datepicker>
+		<div class="pure-control-group">
+			<label>Dauer (h)</label>
+			<input type="number" value="{{inputDuration}}" min="0" required>
+		</div>
+		<div class="pure-control-group">
+			<label>Beschreibung</label>
+			<textarea value="{{desc}}"></textarea>
+		</div>
+		<div class="pure-controls">
+			<button class="pure-button pure-button-primary" type="submit">Speichern</button>
+			<strong>{{error}}</strong>
+		</div>
+	</fieldset>
 </form>
-<!-- {{/eventForm}} -->
+{{/partial}}
 <!-- vim: set ft=mustache: -->
