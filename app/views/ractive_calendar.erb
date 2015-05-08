@@ -29,6 +29,7 @@
 		{{ formatDateTime(start) }}: <strong>{{title}}</strong>
 	</span>
 	{{#if active}}
+		<div intro="slide" outro="slide">
 		{{#if editing}}
 			{{#if id}}
 				{{>editEvent}}
@@ -43,6 +44,7 @@
 				<p><button class="pure-button" on-click="edit-event">Bearbeiten</button></p>
 			{{/canEdit}}
 		{{/if}}
+		</div>
 	{{/if}}
 </li>
 {{/partial}}
