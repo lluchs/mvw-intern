@@ -97,6 +97,11 @@
         isSameDay: function(m1, m2) {
           return moment(m1).isSame(m2, 'day');
         },
+
+        // Returns whether the given moment is in the past.
+        isPast: function(m) {
+          return moment(m).isBefore(moment());
+        },
       }
     },
     onrender: function() {

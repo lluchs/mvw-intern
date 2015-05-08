@@ -34,7 +34,7 @@
 
 {{#partial event}}
 <li class="event">
-	<span on-click="toggle-event" class="header {{eventClass(type)}}">
+	<span on-click="toggle-event" class="header {{eventClass(type)}} {{isPast(start) ? 'event-past' : ''}}">
 		{{ formatDateTime(start) }}: <strong>{{title}}</strong>
 	</span>
 	{{#if active}}

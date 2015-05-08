@@ -13,6 +13,10 @@
     cursor: pointer;
 }
 
+.event-past {
+    opacity: 0.7;
+}
+
 .event-auftritt {
     text-shadow: #CA3C25 1px 1px 0;
 }
