@@ -69,7 +69,8 @@
 
         // Returns the class name for the given type.
         eventClass: function(type) {
-          return this.get('types')[type].className;
+          var t = this.get('types')[type];
+          return t != null ? t.className : '';
         },
 
         // Formats a moment time value.
