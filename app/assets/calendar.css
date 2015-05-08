@@ -9,6 +9,10 @@
     width: 10em;
 }
 
+.event .header {
+    cursor: pointer;
+}
+
 .event-auftritt {
     text-shadow: #CA3C25 1px 1px 0;
 }

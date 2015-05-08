@@ -31,8 +31,8 @@
 </p>
 
 {{#partial event}}
-<li>
-	<span on-click="toggle-event" class="{{eventClass(type)}}">
+<li class="event">
+	<span on-click="toggle-event" class="header {{eventClass(type)}}">
 		{{ formatDateTime(start) }}: <strong>{{title}}</strong>
 	</span>
 	{{#if active}}
