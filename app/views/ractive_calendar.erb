@@ -6,20 +6,17 @@
 
 <ul>
 {{#canEdit}}
-	<li><button class="pure-button" on-click="add-event">Neu‥</button></li>
+	{{#newEvent}}
+		{{>event}}
+	{{else}}
+		<li><button class="pure-button" on-click="add-event">Neu‥</button></li>
+	{{/newEvent}}
 {{/canEdit}}
 {{#eventsLoading}}
 	<li class="no-events">Lädt‥</li>
 {{else}}
 	{{#events}}
-		<li>
-			<span on-click="toggle-event">
-				{{ formatDateTime(start) }}: <strong>{{title}}</strong>
-			</span>
-			{{#if active}}
-				{{>event}}
-			{{/if}}
-		</li>
+		{{>event}}
 	{{else}}
 		<li class="no-events">Keine Termine!</li>
 	{{/events}}
@@ -27,17 +24,24 @@
 </ul>
 
 {{#partial event}}
-{{#if editing}}
-	{{#if id}}
-		{{>editEvent}}
-	{{else}}
-		{{>newEvent}}
+<li>
+	<span on-click="toggle-event">
+		{{ formatDateTime(start) }}: <strong>{{title}}</strong>
+	</span>
+	{{#if active}}
+		{{#if editing}}
+			{{#if id}}
+				{{>editEvent}}
+			{{else}}
+				{{>newEvent}}
+			{{/if}}
+		{{else}}
+			<h2>{{title}}</h2>
+			<p>{{ formatDateTime(start) }} bis {{ formatTime(eventEnd(this)) }}</p>
+			<p>{{desc}}</p>
+		{{/if}}
 	{{/if}}
-{{else}}
-	<h2>{{title}}</h2>
-	<p>{{ formatDateTime(start) }} bis {{ formatTime(eventEnd(this)) }}</p>
-	<p>{{desc}}</p>
-{{/if}}
+</li>
 {{/partial}}
 
 {{#partial newEvent}}

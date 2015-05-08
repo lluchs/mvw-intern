@@ -103,7 +103,7 @@
           event = this.defaultEvent(moment().year(this.get('year')));
           event.active = true;
           event.editing = true;
-          this.get('events').unshift(event);
+          this.set('newEvent', event);
         },
         'set-event-type': function(e, type) {
           this.set('activeEvent.type', type);
@@ -115,7 +115,8 @@
           event.duration = moment.duration(event.inputDuration, 'hours');
           var self = this;
           this.saveEvent(event).then(function(result) {
-            self.splice('events', +e.keypath.split('.').reverse()[0], 1);
+            self.set('newEvent', null);
+            // TODO: Sorting
             self.unshift('events', result);
           }, function(error) {
             self.set(e.keypath+'.error', error);
