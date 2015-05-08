@@ -23,9 +23,16 @@
 {{/eventsLoading}}
 </ul>
 
+<p>
+	<em>Legende: </em>
+	{{#types:name}}
+	<span class="{{eventClass(name)}}">{{name}}&nbsp;</span>
+	{{/types}}
+</p>
+
 {{#partial event}}
 <li>
-	<span on-click="toggle-event">
+	<span on-click="toggle-event" class="{{eventClass(type)}}">
 		{{ formatDateTime(start) }}: <strong>{{title}}</strong>
 	</span>
 	{{#if active}}
@@ -65,7 +72,7 @@
 		<div class="pure-control-group">
 			<label>Typ</label>
 			<select value="{{type}}">
-				{{#types}}
+				{{#types:name}}
 				<option value="{{name}}">{{name}}</option>
 				{{/types}}
 			</select>

@@ -47,24 +47,29 @@
     data: function() {
       return {
         year: moment().year(),
-        types: [
-          {
-            name: 'Probe',
-            color: 'blue',
+        types: {
+          'Auftritt': {
+            className: 'event-auftritt',
           },
-          {
-            name: 'Auftritt',
-            color: 'red',
+          'Probe': {
+            className: 'event-probe',
           },
-          {
-            name: 'Ständchen',
-            color: 'green',
+          'Ständchen': {
+            className: 'event-staendchen',
           },
-        ],
+          'Arbeitseinsatz': {
+            className: 'event-arbeitseinsatz',
+          },
+        },
 
         // Returns the event end time as moment object.
         eventEnd: function(event) {
           return moment(event.start).clone().add(moment.duration(event.duration));
+        },
+
+        // Returns the class name for the given type.
+        eventClass: function(type) {
+          return this.get('types')[type].className;
         },
 
         // Formats a moment time value.
@@ -155,7 +160,7 @@
         duration: moment.duration(1, 'hour'),
         title: '',
         desc: '',
-        type: this.get('types')[0].name,
+        type: 'Auftritt',
 
         // Values used only for two-way binding.
         inputDuration: 1,
