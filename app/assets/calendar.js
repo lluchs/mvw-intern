@@ -15,14 +15,14 @@
     oninit: function() {
       this.observe({
         moment: function(m) {
-          m = moment(m);
+          var m = moment(m);
           this.set('date', m.format('DD.MM.'));
           this.set('time', m.format('H:mm'));
         },
         date: function(d) {
           var m, n;
           m = moment(d, 'DD.MM.');
-          n = this.get('moment')
+          n = moment(this.get('moment'))
             .month(m.month())
             .date(m.date())
           this.set('moment', n);
@@ -30,7 +30,7 @@
         time: function(t) {
           var m, n;
           m = moment(t, 'H:mm');
-          n = this.get('moment')
+          n = moment(this.get('moment'))
             .hour(m.hour())
             .minute(m.minute())
           this.set('moment', n);
@@ -105,8 +105,11 @@
           event.editing = true;
           this.set('newEvent', event);
         },
-        'set-event-type': function(e, type) {
-          this.set('activeEvent.type', type);
+        'edit-event': function(e) {
+          var event = e.context;
+          event.editing = true;
+          event.inputDuration = moment.duration(e.context.duration).asHours();
+          this.update(e.keypath);
         },
         'submit-event': function(e) {
           var event, match;
@@ -115,9 +118,15 @@
           event.duration = moment.duration(event.inputDuration, 'hours');
           var self = this;
           this.saveEvent(event).then(function(result) {
-            self.set('newEvent', null);
-            // TODO: Sorting
-            self.unshift('events', result);
+            if ('id' in event) {
+              result.active = true;
+              // TODO: Sorting
+              self.set(e.keypath, result);
+            } else {
+              self.set('newEvent', null);
+              // TODO: Sorting
+              self.unshift('events', result);
+            }
           }, function(error) {
             self.set(e.keypath+'.error', error);
           });
@@ -169,7 +178,7 @@
 
     saveEvent: function(event) {
       return fetch('/calendar/events', {
-        method: 'post',
+        method: 'id' in event ? 'put' : 'post',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -201,13 +210,15 @@
   }
 
   function eventToJSON(event) {
-    return {
+    var obj = {
       start: event.start,
       duration: event.duration.toString(),
       title: event.title,
       desc: event.desc,
       type: event.type,
     };
+    if ('id' in event) obj.id = event.id;
+    return obj;
   }
 
 })();

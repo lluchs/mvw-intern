@@ -25,7 +25,6 @@ module MvwIntern
           halt 403 unless current_user.admin
 
           event_json = JSON.parse request.body.read
-          puts event_json
           event = Models::Event.new
           event.set start: event_json['start'], duration: event_json['duration'], title: event_json['title'], desc: event_json['desc'], type: event_json['type']
           event.save
@@ -36,10 +35,11 @@ module MvwIntern
         app.put '/calendar/events' do
           halt 403 unless current_user.admin
 
-          event = Models::Event[params[:id]]
+          event_json = JSON.parse request.body.read
+          event = Models::Event[event_json['id']]
           halt 404 if event.nil?
 
-          event.set_fields(params, [:start, :duration, :title, :desc, :type])
+          event.set start: event_json['start'], duration: event_json['duration'], title: event_json['title'], desc: event_json['desc'], type: event_json['type']
           event.save
 
           event.to_json
