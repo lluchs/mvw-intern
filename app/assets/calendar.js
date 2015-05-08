@@ -117,6 +117,16 @@
           event.inputDuration = moment.duration(e.context.duration).asHours();
           this.update(e.keypath);
         },
+        'delete-event': function(e) {
+          if (confirm('Wirklich löschen?')) {
+            var self = this;
+            this.deleteEvent(e.context).then(function() {
+              self.set(e.keypath, null);
+            }, function(error) {
+              alert('Löschen fehlgeschlagen: ' + error);
+            });
+          }
+        },
         'submit-event': function(e) {
           var event, match;
           e.original.preventDefault();
@@ -195,6 +205,13 @@
         .then(function(response) {
           return response.json();
         })
+    },
+
+    deleteEvent: function(event) {
+      return fetch('/calendar/events/'+event.id, {
+        method: 'delete',
+      })
+        .then(status)
     },
   });
 

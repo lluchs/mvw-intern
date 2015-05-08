@@ -16,7 +16,9 @@
 	<li class="no-events">Lädt‥</li>
 {{else}}
 	{{#events}}
-		{{>event}}
+		{{#if .}}
+			{{>event}}
+		{{/if}}
 	{{else}}
 		<li class="no-events">Keine Termine!</li>
 	{{/events}}
@@ -48,7 +50,10 @@
 			<p>{{ formatDateTime(start) }} bis {{ formatTime(eventEnd(this)) }}</p>
 			<p>{{desc}}</p>
 			{{#canEdit}}
-				<p><button class="pure-button" on-click="edit-event">Bearbeiten</button></p>
+				<p>
+					<button class="pure-button" on-click="edit-event">Bearbeiten</button>
+					<button class="pure-button button-warning" on-click="delete-event">Löschen</button>
+				</p>
 			{{/canEdit}}
 		{{/if}}
 		</div>

@@ -45,6 +45,19 @@ module MvwIntern
           event.to_json
         end
 
+        app.delete '/calendar/events/:id' do
+          halt 403 unless current_user.admin
+
+          id = params[:id].to_i
+          halt 400 if id == 0
+
+          event = Models::Event[params[:id]]
+          halt 404 if event.nil?
+
+          event.delete
+          halt 204
+        end
+
       end
     end
   end
