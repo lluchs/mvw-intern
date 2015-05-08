@@ -142,6 +142,7 @@
       this.observe({
         'year': function(year) {
           var r = this;
+          r.set('newEvent', null);
           r.set('eventsLoading', true);
           r.fetchEvents(year)
             .then(function(events) {
