@@ -1,5 +1,6 @@
 # Calendar and event routes
 
+require 'pry'
 module MvwIntern
   module Routes
     module Calendar
@@ -10,11 +11,14 @@ module MvwIntern
         end
 
         app.get '/calendar/events' do
-          Models::Event.all.to_json
+          Models::Event.all.order(:start).to_json
         end
 
         app.get '/calendar/events/:year' do
-          Models::Event.where('EXTRACT(YEAR FROM start) = :year', year: params[:year]).to_json
+          Models::Event
+            .where('EXTRACT(YEAR FROM start) = :year', year: params[:year])
+            .order(:start)
+            .to_json
         end
 
         app.post '/calendar/events' do
