@@ -144,7 +144,8 @@
               // TODO: Sorting
               self.set(e.keypath, result);
             } else {
-              self.set('newEvent', null);
+              // There's some race condition with the Datepicker observers.
+              setTimeout(function() { self.set('newEvent', null); }, 1);
               // TODO: Sorting
               self.unshift('events', result);
             }
