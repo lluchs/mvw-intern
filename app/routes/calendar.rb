@@ -1,6 +1,5 @@
 # Calendar and event routes
 
-require 'pry'
 module MvwIntern
   module Routes
     module Calendar
