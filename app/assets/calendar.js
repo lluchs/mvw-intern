@@ -192,7 +192,7 @@
 
     // Fetches events of the given year, returning a promise.
     fetchEvents: function(year) {
-      return fetch('/calendar/events/' + year)
+      return fetch('/calendar/events/' + year, {credentials: 'same-origin'})
         .then(status)
         .then(function(response) {
           return response.json();
@@ -202,6 +202,7 @@
     saveEvent: function(event) {
       return fetch('/calendar/events', {
         method: 'id' in event ? 'put' : 'post',
+        credentials: 'same-origin',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -216,6 +217,7 @@
     deleteEvent: function(event) {
       return fetch('/calendar/events/'+event.id, {
         method: 'delete',
+        credentials: 'same-origin',
       })
         .then(status)
     },
