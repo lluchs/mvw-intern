@@ -24,18 +24,22 @@ module MvwIntern
 
     configure do
       enable :logging
-      enable :sessions
       enable :method_override
     end
 
     configure :development do
+      enable :sessions
       set :session_secret, 'foobar'
       set :persona_audience, 'http://localhost:3000'
       set :maildir, 'maildir'
     end
 
     configure :production do
-      set :session_secret, ENV['SESSION_SECRET']
+      # Fixes issue with proxying POST
+      use Rack::Session::Cookie,
+        key: 'session',
+        path: '/',
+        secret: ENV['SESSION_SECRET']
       set :persona_audience, ENV['PERSONA_AUDIENCE']
       set :maildir, ENV['MAILDIR']
     end
