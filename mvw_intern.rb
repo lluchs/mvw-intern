@@ -42,7 +42,7 @@ module MvwIntern
 
     before do
       unless login? || request.path.start_with?('/auth')
-        halt slim :login
+        halt 401, slim(:login)
       end
     end
 
