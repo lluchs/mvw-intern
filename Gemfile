@@ -10,6 +10,7 @@ gem 'sequel'
 gem 'sinatra-sequel'
 
 gem 'pg'
+gem 'sequel_pg'
 
 gem 'rest-client'
 
