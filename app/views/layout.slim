@@ -17,16 +17,16 @@ html
         span
 
       nav#menu
-        .pure-menu.pure-menu-open
+        .pure-menu
           a.pure-menu-heading href="/" MVW Intern
 
           - if login?
-            ul
-              li
-                a href="/user" Mitglieder
-                a href="/mail" Mails
-                a href="/calendar" Kalender
-              li style="text-align: center; margin-top: 2em"
+            ul.pure-menu-list
+              li.pure-menu-item
+                a.pure-menu-link href="/user" Mitglieder
+                a.pure-menu-link href="/mail" Mails
+                a.pure-menu-link href="/calendar" Kalender
+              li.pure-menu-item style="text-align: center; margin-top: 2em"
                 button.pure-button#signout Abmelden
 
       #main
