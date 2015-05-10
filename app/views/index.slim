@@ -1,18 +1,21 @@
 header
   h1 MVW Intern
 
-main
-  h2 Nächste Termine
-  ul
-    - @events.each do |e|
-      li
-        strong= e[:start].strftime '%d.%m.%Y %H:%M'
-        '
-        a[href='/calendar']= e[:title]
+main.pure-g
 
-  h2 Letzte E-Mails
-  ul
-    - @messages.each do |message|
-      - mail = message.data
-      li
-        a href="/mail/#{message.key}" = mail.subject
+  section.pure-u-1.pure-u-md-1-2
+    h2 Nächste Termine
+    ul
+      - @events.each do |e|
+        li
+          strong= e[:start].strftime '%d.%m.%Y %H:%M'
+          '
+          a[href='/calendar']= e[:title]
+
+  section.pure-u-1.pure-u-md-1-2
+    h2 Letzte E-Mails
+    ul
+      - @messages.each do |message|
+        - mail = message.data
+        li
+          a href="/mail/#{message.key}" = mail.subject
