@@ -1,5 +1,15 @@
 /*= require side-menu.css */
 
+body {
+    color: #444;
+}
+
+.pure-img-responsive {
+    max-width: 100%;
+    height: auto;
+}
+
+
 .button-success,
 .button-error,
 .button-warning,
