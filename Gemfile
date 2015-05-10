@@ -4,7 +4,7 @@ gem 'sinatra'
 gem 'thin'
 
 gem 'slim'
-gem 'sprockets'
+gem 'sprockets', '~> 3'
 
 gem 'sequel'
 gem 'sinatra-sequel'
@@ -17,3 +17,8 @@ gem 'rest-client'
 gem 'mail'
 gem 'maildir'
 gem 'sanitize'
+
+group :production do
+  gem 'uglifier'
+  gem 'sass'
+end
