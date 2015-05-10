@@ -51,6 +51,7 @@ module MvwIntern
     end
 
     get '/' do
+      @events = Models::Event.future(5)
       slim :index
     end
 

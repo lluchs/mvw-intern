@@ -1,5 +1,11 @@
 header
-  h1 Hello World!
+  h1 MVW Intern
 
 main
-  p Content...
+  h2 Nächste Termine
+  ul
+    - @events.each do |e|
+      li
+        strong= e[:start].strftime '%d.%m.%Y %H:%M'
+        '
+        a[href='/calendar']= e[:title]
