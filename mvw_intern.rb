@@ -51,7 +51,12 @@ module MvwIntern
     end
 
     get '/' do
-      @events = Models::Event.future(5)
+      n = 5
+      @events = Models::Event.future(n)
+      @messages = get_maildir_contents
+        .sort_by { |msg| msg.data.date }
+        .reverse
+        .slice(0, n)
       slim :index
     end
 

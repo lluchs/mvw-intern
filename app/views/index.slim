@@ -9,3 +9,10 @@ main
         strong= e[:start].strftime '%d.%m.%Y %H:%M'
         '
         a[href='/calendar']= e[:title]
+
+  h2 Letzte E-Mails
+  ul
+    - @messages.each do |message|
+      - mail = message.data
+      li
+        a href="/mail/#{message.key}" = mail.subject
