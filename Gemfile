@@ -23,3 +23,8 @@ group :production do
   gem 'uglifier'
   gem 'sass'
 end
+
+group :development do
+  # Debugging
+  gem 'pry'
+end

@@ -1,18 +1,20 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    coderay (1.1.0)
     crass (0.2.1)
     daemons (1.1.9)
     eventmachine (1.0.3)
     eventmachine (1.0.3-x86-mingw32)
+    execjs (2.5.2)
     ffi (1.9.3-x86-mingw32)
-    hike (1.2.3)
+    json (1.8.2)
     mail (2.6.1)
       mime-types (>= 1.16, < 3)
     maildir (2.1.0)
+    method_source (0.8.2)
     mime-types (2.3)
     mini_portile (0.6.0)
-    multi_json (1.10.1)
     netrc (0.7.7)
     nokogiri (1.6.3.1)
       mini_portile (= 0.6.0)
@@ -22,6 +24,15 @@ GEM
       nokogiri
     pg (0.18.1)
     pg (0.18.1-x86-mingw32)
+    pry (0.10.1)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
+    pry (0.10.1-x86-mingw32)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
+      win32console (~> 1.3)
     rack (1.5.2)
     rack-protection (1.5.3)
       rack
@@ -36,7 +47,11 @@ GEM
       crass (~> 0.2.0)
       nokogiri (>= 1.4.4)
       nokogumbo (= 1.1.9)
+    sass (3.4.13)
     sequel (4.13.0)
+    sequel_pg (1.6.12)
+      pg (>= 0.8.0)
+      sequel (>= 3.39.0)
     sinatra (1.4.5)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -47,17 +62,19 @@ GEM
     slim (2.0.3)
       temple (~> 0.6.6)
       tilt (>= 1.3.3, < 2.1)
-    sprockets (2.12.1)
-      hike (~> 1.2)
-      multi_json (~> 1.0)
+    slop (3.6.0)
+    sprockets (3.0.3)
       rack (~> 1.0)
-      tilt (~> 1.1, != 1.3.0)
     temple (0.6.8)
     thin (1.6.2)
       daemons (>= 1.0.9)
       eventmachine (>= 1.0.0)
       rack (>= 1.0.0)
     tilt (1.4.1)
+    uglifier (2.7.1)
+      execjs (>= 0.3.0)
+      json (>= 1.8.0)
+    win32console (1.3.2-x86-mingw32)
 
 PLATFORMS
   ruby
@@ -67,11 +84,15 @@ DEPENDENCIES
   mail
   maildir
   pg
+  pry
   rest-client
   sanitize
+  sass
   sequel
+  sequel_pg
   sinatra
   sinatra-sequel
   slim
-  sprockets
+  sprockets (~> 3)
   thin
+  uglifier
