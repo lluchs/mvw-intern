@@ -4,7 +4,7 @@ module MvwIntern
   module Routes
     module User
       def self.registered(app)
-        
+
         app.get '/user' do
           @users = Models::User.all
           slim :user_list
@@ -15,11 +15,7 @@ module MvwIntern
 
           user = Models::User.new
 
-          user.name       = params[:name]
-          user.email      = params[:email]
-          user.instrument = params[:instrument]
-          user.admin      = params[:admin]
-
+          update_user_params(user, params)
           user.save
 
           redirect '/user'
@@ -31,11 +27,7 @@ module MvwIntern
           user = Models::User[params[:id]]
           halt 404 if user.nil?
 
-          user.name       = params[:name]
-          user.email      = params[:email]
-          user.instrument = params[:instrument]
-          user.admin      = params[:admin]
-
+          update_user_params(user, params)
           user.save
 
           redirect '/user'

@@ -17,6 +17,10 @@ form.pure-form.pure-form-aligned action="/user" method="post"
       label for="instrument" Instrument
       input#instrument name="instrument" type="text" value=user.instrument
 
+    .pure-control-group
+      label for="birthday" Geburtstag
+      input#birthday name="birthday" type="date" value=user.birthday
+
     .pure-controls
       label.pure-checkbox for="admin"
         input#admin name="admin" type="checkbox" checked=user.admin

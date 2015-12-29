@@ -15,6 +15,7 @@ main
         th Name
         th E-Mail
         th Instrument
+        th Geburtstag
 
     - @users.each do |user|
       tr
@@ -26,3 +27,4 @@ main
             = user.name
         td= user.email
         td= user.instrument
+        td= user.birthday.strftime('%d.%m.')

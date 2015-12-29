@@ -12,5 +12,13 @@ module MvwIntern
       end
     end
   
+    def update_user_params(user, params)
+      user.name       = params[:name]
+      user.email      = params[:email]
+      user.instrument = params[:instrument]
+      user.birthday   = params[:birthday]
+      user.admin      = params[:admin]
+    end
+
   end
 end
