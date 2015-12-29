@@ -2,5 +2,16 @@ header
   h1 MVW Intern
 
 main
-  p
-    button.pure-button.pure-button-primary#signin Anmelden
+  form#signin.pure-form.pure-form-aligned
+    fieldset
+      .pure-control-group
+        label for="email" E-Mail
+        input#email type="email" required="" autofocus=""
+      .pure-control-group
+        label for="password" Passwort
+        input#password type="password" required=""
+
+
+      .pure-controls
+        p#message
+        button.pure-button.pure-button-primary Anmelden

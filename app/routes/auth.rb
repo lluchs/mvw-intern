@@ -9,29 +9,18 @@ module MvwIntern
       def self.registered(app)
 
         app.post "/auth/login" do
-          # check assertion with a request to the verifier
-          response = nil
-          if params[:assertion]
-            restclient_url = "https://verifier.login.persona.org/verify"
-            restclient_params = {
-              :assertion => params["assertion"],
-              :audience  => settings.persona_audience,
-            }
-            response = JSON.parse(RestClient::Resource.new(restclient_url, :verify_ssl => true).post(restclient_params))
-          end
+          email = params[:email]
+          password = params[:password]
 
-          # create a session if assertion is valid
-          if response["status"] == "okay"
-            # Check whether we have a user with the given email address.
-            email = response["email"]
-            if Models::User[email: email].nil?
-              [403, {status: "error", message: 'Es gibt keinen Nutzer mit dieser E-Mail-Adresse.'}.to_json]
-            else
-              session[:email] = email
-              response.to_json
-            end
+          user = Models::User[email: email]
+
+          if user.nil?
+            [403, {status: "error", message: 'Es gibt keinen Nutzer mit dieser E-Mail-Adresse.'}.to_json]
+          elsif not user.verify_password password
+            [403, {status: "error", message: 'Ungültiges Passwort.'}.to_json]
           else
-            [403, response.to_json]
+            session[:email] = email
+            [200, {status: "success"}.to_json]
           end
         end
 

@@ -14,6 +14,9 @@ gem 'sequel_pg', require: 'sequel'
 
 gem 'rest-client'
 
+# Password hashing
+gem 'argon2'
+
 # Needed for /mail routes
 gem 'mail'
 gem 'maildir'

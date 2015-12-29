@@ -1,2 +1,2 @@
 //= require ./ui.js
-//= require ./persona.js
+//= require ./login.js
