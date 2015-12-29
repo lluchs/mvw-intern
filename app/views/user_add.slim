@@ -2,4 +2,4 @@ header
   h1 Mitglied hinzufügen
 
 main
-  == slim :user_form, locals: {method: 'post', user: @user, submit_label: 'Hinzufügen'}
+  == slim :user_form, locals: {method: 'post', user: @user, submit_label: 'Hinzufügen', reset_password: true}

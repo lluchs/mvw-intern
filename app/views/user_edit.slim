@@ -2,4 +2,4 @@ header
   h1 Mitglied bearbeiten
 
 main
-  == slim :user_form, locals: {method: 'put', user: @user, submit_label: 'Bearbeiten'}
+  == slim :user_form, locals: {method: 'put', user: @user, submit_label: 'Bearbeiten', reset_password: false}

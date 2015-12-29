@@ -26,4 +26,8 @@ form.pure-form.pure-form-aligned action="/user" method="post"
         input#admin name="admin" type="checkbox" checked=user.admin
         | &nbsp; Admin
 
+      label.pure-checkbox for="reset_password"
+        input#reset_password name="reset_password" type="checkbox" checked=reset_password
+        | &nbsp; Passwort auf den Geburtstag zurücksetzen
+
       button.pure-button.pure-button-primary type="submit" = submit_label
