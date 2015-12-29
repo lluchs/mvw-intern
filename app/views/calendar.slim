@@ -4,6 +4,7 @@ header
 main
   div#calendar
 
+  input#can_edit type="hidden" value=@can_edit.to_s
   script#template type="text/ractive" == erb :ractive_calendar
 
   link href='/assets/calendar.css' rel='stylesheet'

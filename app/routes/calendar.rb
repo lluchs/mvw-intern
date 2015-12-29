@@ -6,6 +6,7 @@ module MvwIntern
       def self.registered(app)
         
         app.get '/calendar' do
+          @can_edit = user_is_admin?
           slim :calendar
         end
 
@@ -21,7 +22,7 @@ module MvwIntern
         end
 
         app.post '/calendar/events' do
-          halt 403 unless current_user.admin
+          halt 403 unless user_is_admin?
 
           event_json = JSON.parse request.body.read
           event = Models::Event.new
@@ -32,7 +33,7 @@ module MvwIntern
         end
 
         app.put '/calendar/events' do
-          halt 403 unless current_user.admin
+          halt 403 unless user_is_admin?
 
           event_json = JSON.parse request.body.read
           event = Models::Event[event_json['id']]
@@ -45,7 +46,7 @@ module MvwIntern
         end
 
         app.delete '/calendar/events/:id' do
-          halt 403 unless current_user.admin
+          halt 403 unless user_is_admin?
 
           id = params[:id].to_i
           halt 400 if id == 0

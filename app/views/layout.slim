@@ -21,8 +21,8 @@ html
         .pure-menu
           a.pure-menu-heading href="/" MVW Intern
 
-          - if login?
-            ul.pure-menu-list
+          ul.pure-menu-list
+            - if login?
               li.pure-menu-item
                 a.pure-menu-link href="/user" Mitglieder
                 a.pure-menu-link href="/mail" Mails
@@ -31,6 +31,9 @@ html
                 a.pure-menu-link href="/settings" Einstellungen
               li.pure-menu-item style="text-align: center; margin-top: 2em"
                 button.pure-button#signout Abmelden
+            - elsif @show_login_button
+              li.pure-menu-item style="text-align: center; margin-top: 2em"
+                button.pure-button onclick="location.href='/'" Anmelden
 
       #main
         == yield

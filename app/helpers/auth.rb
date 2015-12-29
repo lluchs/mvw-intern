@@ -11,6 +11,10 @@ module MvwIntern
         Models::User[email: session[:email]]
       end
     end
+
+    def user_is_admin?
+      login? && current_user.admin
+    end
   
   end
 end

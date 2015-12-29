@@ -228,7 +228,7 @@
     el: '#calendar',
     data: function() {
       return {
-        canEdit: true,
+        canEdit: document.getElementById('can_edit').value == 'true',
       }
     },
 

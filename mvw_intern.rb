@@ -45,7 +45,10 @@ module MvwIntern
     end
 
     before do
-      unless login? || request.path.start_with?('/auth')
+      # Auth is needed for logging in, calendar can be viewed without login to allow linking from emails.
+      if login? || request.path.start_with?('/auth') || request.path.start_with?('/calendar')
+        @show_login_button = true
+      else
         halt 401, slim(:login)
       end
     end
