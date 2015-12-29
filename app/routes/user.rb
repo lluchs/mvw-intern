@@ -46,6 +46,22 @@ module MvwIntern
           slim :user_edit
         end
 
+        app.get '/settings' do
+          slim :user_settings
+        end
+
+        app.post '/settings' do
+          user = current_user
+          if user.verify_password(params[:old_password])
+            user.password = params[:password]
+            user.save
+            @message = 'Passwort geändert.'
+          else
+            @message = 'Altes Passwort ungültig.'
+          end
+          slim :user_settings
+        end
+
       end
     end
   end
