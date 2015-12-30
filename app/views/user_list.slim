@@ -27,4 +27,4 @@ main
             = user.name
         td= user.email
         td= user.instrument
-        td= user.birthday.strftime('%d.%m.')
+        td= user.birthday.nil? ? '' : user.birthday.strftime('%d.%m.')
