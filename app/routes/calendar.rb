@@ -5,7 +5,7 @@ module MvwIntern
     module Calendar
       def self.registered(app)
         
-        app.get '/calendar' do
+        app.get %r{\A/calendar(/\d{4})?\z} do
           @can_edit = user_is_admin?
           slim :calendar
         end

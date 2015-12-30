@@ -9,6 +9,8 @@
   'use strict';
   moment.locale('de');
 
+  var BASE_URL = '/calendar';
+
   var Datepicker = Ractive.extend({
     template: '{{>content}}',
     isolated: false,
@@ -165,6 +167,9 @@
               if (r.get('year') == year) {
                 r.set('events', events);
                 r.set('eventsLoading', false);
+                if (location.pathname.indexOf(BASE_URL + '/' + year) != 0) {
+                  history.pushState({year: year}, '', BASE_URL + '/' + year);
+                }
               }
             })
         },
@@ -227,12 +232,30 @@
     debug: true,
     el: '#calendar',
     data: function() {
+      var url = parsePathname(location.pathname);
       return {
+        year: url.year,
         canEdit: document.getElementById('can_edit').value == 'true',
       }
     },
 
   });
+
+  window.addEventListener('popstate', function(event) {
+    if (!event.state) return;
+    calendar.set('year', event.state.year);
+  });
+
+  function parsePathname(pn) {
+    var m = new RegExp('^' + BASE_URL + '(/\\d{4})?$').exec(pn);
+    var result = {};
+    if (m && m[1]) {
+      result.year = +m[1].substr(1, 4);
+    } else {
+      result.year = moment().year();
+    }
+    return result;
+  }
 
   function status(response) {
     if (response.status >= 200 && response.status < 300) {
