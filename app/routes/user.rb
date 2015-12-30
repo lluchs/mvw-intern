@@ -6,7 +6,7 @@ module MvwIntern
       def self.registered(app)
 
         app.get '/user' do
-          @users = Models::User.all
+          @users = Models::User.order(:name)
           slim :user_list
         end
 
