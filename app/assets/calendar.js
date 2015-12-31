@@ -266,7 +266,8 @@
 
   function eventToJSON(event) {
     var obj = {
-      start: event.start,
+      // Format as ISO 8601 without timezone.
+      start: event.start.format('YYYY-MM-DDTHH:mm:ss'),
       duration: event.duration.toString(),
       title: event.title,
       desc: event.desc,
