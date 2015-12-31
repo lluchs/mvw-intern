@@ -11,14 +11,13 @@ module MvwIntern
         end
 
         app.get '/calendar/events' do
-          Models::Event.all.order(:start).to_json
+          json Models::Event.all.order(:start)
         end
 
         app.get '/calendar/events/:year' do
-          Models::Event
+          json Models::Event
             .where('EXTRACT(YEAR FROM start) = :year', year: params[:year])
             .order(:start)
-            .to_json
         end
 
         app.post '/calendar/events' do
@@ -29,7 +28,7 @@ module MvwIntern
           event.set start: event_json['start'], duration: event_json['duration'], title: event_json['title'], desc: event_json['desc'], type: event_json['type']
           event.save
 
-          event.to_json
+          json event
         end
 
         app.put '/calendar/events' do
@@ -42,7 +41,7 @@ module MvwIntern
           event.set start: event_json['start'], duration: event_json['duration'], title: event_json['title'], desc: event_json['desc'], type: event_json['type']
           event.save
 
-          event.to_json
+          json event
         end
 
         app.delete '/calendar/events/:id' do

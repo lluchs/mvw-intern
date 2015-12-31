@@ -1,4 +1,5 @@
 require 'sinatra/base'
+require 'sinatra/json'
 require 'sinatra/sequel'
 require 'maildir'
 
