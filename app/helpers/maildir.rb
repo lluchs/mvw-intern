@@ -22,7 +22,7 @@ module MvwIntern
     # Sanitizes the given mail body.
     def sanitize_mail(mail)
       if mail.content_type.start_with? 'text/html'
-        html = mail.body.decoded
+        html = mail.body.decoded.encode('utf-8', mail.charset)
         Sanitize.fragment(html, Sanitize::Config::BASIC)
       else
         Rack::Utils.escape_html(mail.body.decoded)
