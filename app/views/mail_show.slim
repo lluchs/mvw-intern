@@ -4,6 +4,7 @@ header
 
 main
   p
-    strong Von: #{email_to_name @mail.from.first}
+    - email = @mail.from.first
+    strong Von: <a href="mailto:#{email}">#{email_to_name email}</a>
   / The body is already sanitized.
   p== @body
