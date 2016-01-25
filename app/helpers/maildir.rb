@@ -23,7 +23,7 @@ module MvwIntern
     def sanitize_mail(mail)
       if mail.content_type.start_with? 'text/html'
         html = mail.body.decoded.encode('utf-8', mail.charset)
-        Sanitize.fragment(html, Sanitize::Config.merge(Sanitize::Config::BASIC,
+        Sanitize.fragment(html, Sanitize::Config.merge(Sanitize::Config::RELAXED,
           remove_contents: ['style']
         ))
       else
@@ -49,7 +49,13 @@ module MvwIntern
         if part.nil?
           '<em>Nachricht kann leider nicht angezeigt werden.</em>'
         else
-          sanitize_mail part
+          mail_html = sanitize_mail part
+          if part.content_type == 'text/plain'
+            "<div class='text-mail'>#{mail_html}</div>"
+          else
+            mail_html
+          end
+          
         end
       else
         sanitize_mail mail
