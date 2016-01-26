@@ -4,7 +4,7 @@ module MvwIntern
 
     # Tries to convert the given email to a username.
     def email_to_name(email)
-      user = Models::User.where('lower(email) = lower(?)', email).first
+      user = Models::User.by_email(email)
       if user.nil?
         email
       else

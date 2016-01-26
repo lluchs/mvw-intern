@@ -12,7 +12,7 @@ module MvwIntern
           email = params[:email]
           password = params[:password]
 
-          user = Models::User[email: email]
+          user = Models::User.by_email(email)
 
           if user.nil?
             [403, {status: "error", message: 'Es gibt keinen Nutzer mit dieser E-Mail-Adresse.'}.to_json]

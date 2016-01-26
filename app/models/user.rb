@@ -4,6 +4,11 @@ module MvwIntern
   module Models
     class User < Sequel::Model
 
+      # Get user by case-insensitive email.
+      def self.by_email(email)
+        where('lower(email) = lower(?)', email).first
+      end
+
       def verify_password(password)
         # Users without password may not log in. This is useful for accounts
         # which receive mail, but may not access the website.
