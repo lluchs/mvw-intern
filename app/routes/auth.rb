@@ -19,7 +19,7 @@ module MvwIntern
           elsif not user.verify_password password
             [403, {status: "error", message: 'Ungültiges Passwort.'}.to_json]
           else
-            session[:email] = email
+            session[:email] = user.email
             [200, {status: "success"}.to_json]
           end
         end
