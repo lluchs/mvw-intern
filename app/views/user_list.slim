@@ -7,24 +7,32 @@ main
 
   - if current_user.admin
     p
-      a.pure-button href="/user/add" Benutzer hinzufügen...
+      a.pure-button href="/user/add" Benutzer hinzufügen…
 
-  table.pure-table.pure-table-horizontal
-    thead
-      tr
-        th Name
-        th E-Mail
-        th Instrument
-        th Geburtstag
+  div#users-table
+    table#users-table.pure-table.pure-table-horizontal
+      thead
+        tr
+          th Name
+          th E-Mail
+          th Instrument
+          th Geburtstag
 
-    - @users.each do |user|
-      tr
-        td
-          / Link to the edit form for admins.
-          - if current_user.admin
-            a href="/user/#{user.id}/edit" = user.name
-          - else
-            = user.name
-        td= user.email
-        td= user.instrument
-        td= user.birthday.nil? ? '' : user.birthday.strftime('%d.%m.')
+      - @users.each do |user|
+        tr
+          td
+            / Link to the edit form for admins.
+            - if current_user.admin
+              a href="/user/#{user.id}/edit" = user.name
+            - else
+              = user.name
+          td= user.email
+          td= user.instrument
+          td= user.birthday.nil? ? '' : user.birthday.strftime('%d.%m.')
+
+  script#users-data[type='application/json']== @users.to_json(except: [:password])
+
+  script src="/assets/jspm_packages/system.js"
+  script src="/assets/config.js"
+  javascript:
+    System.import('/assets/user.js')

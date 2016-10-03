@@ -10,7 +10,7 @@ html
     link rel="stylesheet" href="/assets/pure/grids-responsive-min.css"
     link rel="stylesheet" href="/assets/mvw-intern.css"
 
-  body data-login=(session[:email])
+  body data-login=(session[:email]) data-admin=((!current_user.nil? && current_user.admin).to_s)
     #layout
       / Menu toggle link
       a#menuLink.menu-link href="#menu"
