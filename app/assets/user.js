@@ -1,12 +1,15 @@
 // User page magic
 import React from 'react'
 import ReactDOM from 'react-dom'
+import orderBy from 'lodash/orderBy'
 
 const UserTable = React.createClass({
   getInitialState() {
     return {
       createMailList: false,
       checkedUsers: {},
+      sortBy: 'firstname',
+      sortDesc: false,
     }
   },
   createMailList() {
@@ -27,8 +30,28 @@ const UserTable = React.createClass({
         ({checkedUsers: {...checkedUsers, [id]: checked}}))
     }
   },
+  sortBy(what) {
+    return (e) => {
+      this.setState((state) => ({
+        sortBy: what,
+        sortDesc: what == state.sortBy ? !state.sortDesc : false,
+      }))
+    }
+  },
+  sortArrow(what) {
+    if (this.state.sortBy == what)
+      return this.state.sortDesc ? '↑' : '↓'
+    else
+      return ''
+  },
   render() {
-    const users = this.props.users
+    let users = this.props.users
+      .map(user => {
+        let [first, last] = user.name.split(' ')
+        return {...user, firstname: first, lastname: last}
+      })
+    users = orderBy(users, this.state.sortBy, this.state.sortDesc ? 'desc' : 'asc')
+
     const checkedUsers = this.state.checkedUsers
     return (
       <div>
@@ -43,10 +66,13 @@ const UserTable = React.createClass({
             <tr>
               {this.state.createMailList &&
                 <th><input type="checkbox" onChange={this.checkAll} defaultChecked /></th>}
-              <th>Name</th>
-              <th>E-Mail</th>
-              <th>Instrument</th>
-              <th>Geburtstag</th>
+              <th>
+                <span onClick={this.sortBy('firstname')}>Vorname {this.sortArrow('firstname')}</span> /&nbsp;
+                <span onClick={this.sortBy('lastname')}>Nachname {this.sortArrow('lastname')}</span>
+              </th>
+              <th onClick={this.sortBy('email')}>E-Mail {this.sortArrow('email')}</th>
+              <th onClick={this.sortBy('instrument')}>Instrument {this.sortArrow('instrument')}</th>
+              <th onClick={this.sortBy('birthday')}>Geburtstag {this.sortArrow('birthday')}</th>
             </tr>
           </thead>
           <tbody>
