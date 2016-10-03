@@ -2,3 +2,7 @@
 
 /bower_components
 /public/assets
+
+# jspm
+/node_modules
+/app/assets/jspm_packages/
