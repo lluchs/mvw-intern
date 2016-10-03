@@ -23,4 +23,16 @@ namespace :assets do
   task :bower do
     sh 'bower install'
   end
+
+  JSPM = 'node_modules/.bin/jspm'
+  desc 'Install jspm dependencies'
+  task :jspm do
+    sh 'npm install'
+    sh "#{JSPM} install"
+  end
+
+  desc 'Bundle jspm files'
+  task :bundle do
+    sh "#{JSPM} bundle user.js --inject"
+  end
 end

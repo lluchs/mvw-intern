@@ -6,3 +6,5 @@
 # jspm
 /node_modules
 /app/assets/jspm_packages/
+/app/assets/build.js
+/app/assets/build.js.map
