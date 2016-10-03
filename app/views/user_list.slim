@@ -30,6 +30,28 @@ main
           td= user.instrument
           td= user.birthday.nil? ? '' : user.birthday.strftime('%d.%m.')
 
+  - if current_user.admin
+    h2 Inaktive
+    table.pure-table.pure-table-horizontal
+      thead
+        tr
+          th Name
+          th E-Mail
+          th Instrument
+          th Geburtstag
+
+      - @inactive_users.each do |user|
+        tr
+          td
+            / Link to the edit form for admins.
+            - if current_user.admin
+              a href="/user/#{user.id}/edit" = user.name
+            - else
+              = user.name
+          td= user.email
+          td= user.instrument
+          td= user.birthday.nil? ? '' : user.birthday.strftime('%d.%m.')
+
   script#users-data[type='application/json']== @users.to_json(except: [:password])
 
   script src="/assets/jspm_packages/system.js"

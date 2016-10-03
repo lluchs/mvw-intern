@@ -6,7 +6,8 @@ module MvwIntern
       def self.registered(app)
 
         app.get '/user' do
-          @users = Models::User.order(:name)
+          @users = Models::User.where(active: true).order(:name)
+          @inactive_users = Models::User.where(active: false).order(:name)
           slim :user_list
         end
 

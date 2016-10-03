@@ -18,6 +18,7 @@ module MvwIntern
       user.email      = params[:email]
       user.instrument = params[:instrument]
       user.birthday   = params[:birthday]
+      user.active     = params[:active] == 'on'
       user.admin      = params[:admin]
 
       if params[:reset_password] == 'on'
