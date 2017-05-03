@@ -21,6 +21,16 @@ module MvwIntern
       user.active     = params[:active] == 'on'
       user.admin      = params[:admin]
 
+      # Update groups from <select multiple>
+      current_groups = user.groups
+      wanted_groups = Models::Group.where(id: params[:groups]).all
+      (current_groups - wanted_groups).each do |g|
+        user.remove_group(g)
+      end
+      (wanted_groups - current_groups).each do |g|
+        user.add_group(g)
+      end
+
       if params[:reset_password] == 'on'
         reset_user_password(user)
       end

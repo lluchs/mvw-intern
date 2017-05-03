@@ -21,6 +21,13 @@ form.pure-form.pure-form-aligned action="/user" method="post"
       label for="birthday" Geburtstag
       input#birthday name="birthday" type="date" value=user.birthday
 
+    .pure-control-group
+      label for="groups" Gruppen
+      select#groups name="groups[]" multiple=true
+        - ::MvwIntern::Models::Group.all.each do |group|
+          option value=group.id selected=(user.groups.any? {|g| g.id == group.id}) 
+            = group.name
+
     .pure-controls
       label.pure-checkbox for="active"
         input#active name="active" type="checkbox" checked=user.active
