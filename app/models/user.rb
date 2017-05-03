@@ -4,6 +4,8 @@ module MvwIntern
   module Models
     class User < Sequel::Model
 
+      many_to_many :groups
+
       # Get user by case-insensitive email.
       def self.by_email(email)
         where('lower(email) = lower(?)', email).first

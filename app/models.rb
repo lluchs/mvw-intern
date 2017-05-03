@@ -14,4 +14,5 @@ class DateTime
 end
 
 require './app/models/user'
+require './app/models/group'
 require './app/models/event'
