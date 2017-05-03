@@ -31,7 +31,7 @@ module MvwIntern
     configure :development do
       enable :sessions
       set :session_secret, 'foobar'
-      set :persona_audience, 'http://localhost:3000'
+      set :hmac_secret, 'foobar'
       set :maildir, 'maildir'
     end
 
@@ -41,7 +41,7 @@ module MvwIntern
         key: 'session',
         path: '/',
         secret: ENV['SESSION_SECRET']
-      set :persona_audience, ENV['PERSONA_AUDIENCE']
+      set :hmac_secret, ENV['HMAC_SECRET'] || abort('HMAC_SECRET not set')
       set :maildir, ENV['MAILDIR']
     end
 

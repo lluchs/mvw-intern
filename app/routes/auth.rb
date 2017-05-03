@@ -1,7 +1,7 @@
 # Persona authentication routes
 
 require 'json'
-require 'rest-client'
+require 'jwt'
 
 module MvwIntern
   module Routes
@@ -27,6 +27,30 @@ module MvwIntern
         app.post "/auth/logout" do
            session[:email] = nil
            204 # No Content
+        end
+
+        # JWT endpoint
+        app.get "/jwt" do
+          # Validate the application.
+          app = params[:app]
+          url = case app
+                when "mvnv2"
+                  "https://nv2.mvwuermersheim.de/login"
+                else
+                  halt 400, slim(:index)
+                  return
+                end
+
+          user = Models::User.by_email(session[:email])
+          groups = user.groups.map(&:name)
+          payload = {
+            sub: user.email,
+            exp: Time.now.to_i + 12 * 3600,
+            aud: app,
+            groups: groups,
+          }
+          token = JWT.encode payload, settings.hmac_secret, 'HS256'
+          redirect "#{url}##{token}"
         end
 
       end

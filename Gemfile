@@ -18,6 +18,8 @@ gem 'rest-client'
 # Password hashing
 gem 'argon2'
 
+gem 'jwt'
+
 # Needed for /mail routes
 gem 'mail'
 gem 'maildir'
